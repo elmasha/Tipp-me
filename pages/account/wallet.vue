@@ -1,19 +1,380 @@
 <template>
-<v-app dark style="background-color: black;color: white;">
-    <v-row>
+<div>
+    <v-card class="pa-3 mb-3" color="black" dark>
+        <v-row class="container">
+            <v-col cols="12" sm="1" md="1"></v-col>
+            <v-col cols="12" sm="10" md="10">
+                <v-row class="">
+                    <v-col cols="12" sm="12" md="12">
+                        <div class="" style="color: white;">
+                            <div class="d-flex">
+                                <h4>Welcome back, <br> {{ user_name }}</h4>
+                                <v-spacer></v-spacer>
+                                <v-btn icon @click="show_qr = !show_qr">
+                                    <v-icon>{{ show_qr ? "mdi-qrcode-remove" : "mdi-qrcode-scan" }}</v-icon>
+                                </v-btn>
+                            </div>
+                        </div>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12" class="parallax_about2">
+                        <v-card color="transparent" dark rounded shaped class="text-center " >
+                            <v-row >
+                                <v-col cols="12" sm="6" md="6" >
 
-        <v-col cols="12" id="home" class="pa-0">
-            <Home :show-burger="false" @send-data="scrollToSection"/>
-        </v-col>
-       
-        <v-col cols="12" id="about" class="pa-0">
-            <About />
-        </v-col>
-    </v-row>
-   
-        
-   
-</v-app>
+                                    <div class="text-center ">
+                                        <v-card-subtitle>Tipp Me Wallet</v-card-subtitle>
+
+                                        <div class="d-flex">
+                                            <v-spacer></v-spacer>
+                                            <div class="d-flex">
+                                                <div class="text-center">
+                                                    <h2 style="margin-top: 35px; font-size: 1rem;margin-right: 6px;">Ksh.</h2>
+                                                    <h1 style="font-weight: 1200; font-size: 3rem">{{ numeral(balance).format("0,0.00") }}</h1>
+                                                    <p style="color: white; "><strong>Total Balance</strong></p>
+                                                </div>
+                                            </div>
+                                            <v-spacer></v-spacer>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+
+                                        <div class="d-flex">
+                                            <v-spacer></v-spacer>
+                                            <div class="d-flex">
+                                                <div class="text-center" style="margin: 8px;">
+                                                    <p style="color: white; ">{{ numeral(available_balance).format("0,0.00") }} <br><b style="font-size:0.7rem"> Available Balance</b></p>
+
+                                                </div>
+
+                                                <div class="text-center" style="margin: 8px;">
+                                                    <p style="color: white; ">{{ numeral(pending_balance).format("0,0.00") }} <br><b style="font-size:0.7rem">Pending Balance</b></p>
+
+                                                </div>
+                                                <div class="text-center" style="margin: 8px;">
+                                                    <p style="color: white; ">
+                                                        <v-icon x-small>mdi-lock-outline</v-icon> {{ numeral(locked_balance).format("0,0.00") }} <br><b style="font-size:0.7rem">Locked Balance</b>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <v-spacer></v-spacer>
+                                        </div>
+                                    </div>
+                                   <br>
+                                    <div>
+                                        <div class="text-center">
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <div class="d-flex">
+                                                    <div class="d-flex">
+                                                        <div style="margin: 8px" class="text-center">
+
+                                                            <v-btn style="margin: 0px" fab small color="#202020" class="green2--text text-center" :to="`/tipp_wallet/${uid}`">
+                                                                <v-icon>mdi-arrow-up-circle</v-icon>
+                                                            </v-btn>
+                                                            <h5>Deposit</h5>
+                                                        </div>
+                                                        <!-- @click="withdraw_dialog = true  " -->
+
+                                                        <div style="margin: 8px" class="text-center">
+
+                                                            <v-btn style="margin: 0px" fab small color="#202020" class="red--text text-center" @click="CheckGoalProgress()">
+                                                                <v-icon>mdi-arrow-down-circle</v-icon>
+                                                            </v-btn>
+                                                            <h5>Withdraw</h5>
+                                                        </div>
+
+                                                        <div style="margin: 8px" class="text-center">
+
+                                                            <v-btn style="margin: 0px" fab small color="#202020" class="purple--text text-center" @click="withdraw_dialog = true">
+                                                                <v-icon>mdi-swap-horizontal</v-icon>
+                                                            </v-btn>
+                                                            <h5>Transfer</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <v-spacer></v-spacer>
+                                            </v-card-actions>
+                                        </div>
+                                    </div>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6" >
+                                    <div class="">
+                                        <v-card elevation="0" color="green" light class="parallax_about">
+                                            <v-card-title class="black--text">Goal Progress
+                                                <v-spacer />
+                                                <v-btn @click="RefreshPage()" icon>
+                                                    <v-icon>mdi-refresh</v-icon>
+                                                </v-btn>
+                                            </v-card-title>
+                                            <v-card-text>
+
+                                                <div class="goal-box text-start">
+
+                                                    <div class="d-flex">
+                                                        <div>
+
+                                                            <p>My Goal: KES <b>{{goal_amount }}</b></p>
+                                                            <small>
+                                                                Raised KES <b>{{ goal_raised   }}</b>
+                                                            </small>
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                        <v-spacer></v-spacer>
+                                                        <div class="text-center">
+
+                                                            <v-progress-circular :size="100" :width="6" :value="goalPercentage" color="black">
+                                                                <p style="font-size: large;"><br>Goal <br> {{ goalPercentage }} %</p>
+                                                            </v-progress-circular>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </v-card-text>
+
+                                        </v-card>
+
+                                    </div>
+                                    <div class="text-start">
+                                        <v-alert border="top" colored-border type="info" elevation="0">
+                                            <p style="font-size: 0.9rem;">All widthdrawals will be done on Completion of your goal.</p>
+                                        </v-alert>
+                                    </div>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12">
+                        <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                                <div class=" grey--text">
+                                    <h4 style="margin: 10px">All transactions</h4>
+                                </div>
+                                <v-chip-group style="margin: 8px" v-model="selection" active-class="black  white--text" column>
+                                    <v-chip @click="FetchTransaction()">All</v-chip>
+
+                                    <v-chip @click="FetchTransactionSearch('Deposit')">Tips <v-icon color="green2">mdi-arrow-up</v-icon>
+                                    </v-chip>
+
+                                    <v-chip @click="FetchTransactionSearch('Withdraw')">Withdrawals <v-icon color="red">mdi-arrow-down</v-icon>
+                                    </v-chip>
+
+                                </v-chip-group>
+                            </v-col>
+                            <v-col cols="12" sm="8" md="8">
+                                <div class="">
+                                    <div class="">
+                                        <v-card v-scroll.self="onScroll" class="overflow-x-hidden" max-height="900" color="black" dark elevation="0" outlined>
+                                            <div class="row" align="start" id="all_items">
+                                                <div v-for="(flight, idx) in all_transactions" :key="idx" class="col-md-9">
+                                                    <v-card class="text-start" elevation="0" color="black" dark outlined>
+                                                        <v-list-item three-line>
+                                                            <v-list-item-content>
+                                                                <div :color="checkColor(flight.transaction_type)" class="text-overline mb-4">
+                                                                    {{ flight.transaction_type }}
+                                                                </div>
+                                                                <div class="text-overline mb-2">
+                                                                    <div class="d-flex">
+                                                                        <div>
+                                                                            Bal. {{ flight.balance_after }}
+                                                                        </div>
+                                                                        <v-spacer></v-spacer>
+                                                                        <div>
+
+                                                                            <div>
+                                                                                {{ flight.status }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <v-list-item-title class="text-h5 mb-1">
+                                                                    <div class="d-flex">
+                                                                        <div class="d-flex">
+                                                                            Ksh. {{ flight.gross_amount }}
+                                                                            <v-icon style="margin-start: 8px" :color="checkColor(flight.transaction_type)">mdi-{{ checkType(flight.transaction_type) }}</v-icon>
+                                                                        </div>
+                                                                        <v-spacer></v-spacer>
+                                                                        <div>
+                                                                            <v-btn icon :color="checkColor(flight.direction)">
+                                                                                <v-icon>mdi-{{ checkType(flight.direction) }}</v-icon>
+                                                                            </v-btn>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </v-list-item-title>
+                                                                <div>
+                                                                    <div>
+                                                                        <p style="font-size: 0.9rem; color: #C6FF00;"> fee {{ flight.fee_amount }} -> net {{ flight.net_amount }} </p>
+                                                                    </div>
+                                                                </div>
+                                                                <v-list-item-subtitle>
+                                                                    <div class="d-flex">
+                                                                        <p style="font-size: 0.9rem; color: #808080;"> {{ flight.reference }}</p>
+                                                                        <v-spacer></v-spacer>
+                                                                        {{
+                                                $moment(flight.print_date).format("MMM Do YYYY, h:mm a")
+                                            }}
+                                                                    </div>
+                                                                </v-list-item-subtitle>
+                                                                <v-list-item-subtitle :color="checkColor(flight.transaction_type)">{{ flight.transaction_status }}</v-list-item-subtitle>
+                                                                <v-list-item-title> </v-list-item-title>
+                                                            </v-list-item-content>
+                                                        </v-list-item>
+
+                                                        <div style="background-color: black">
+                                                            <v-card-actions>
+                                                                <div class="d-flex green--text">
+                                                                    <v-icon color="green" small>mdi-id-copy</v-icon>
+                                                                    {{ flight.refrence }}
+                                                                </div>
+
+                                                            </v-card-actions>
+                                                        </div>
+                                                    </v-card>
+                                                </div>
+                                            </div>
+                                        </v-card>
+
+                                    </div>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+
+            </v-col>
+            <v-col cols="12" sm="1" md="1"></v-col>
+        </v-row>
+    </v-card>
+
+    <v-dialog v-model="show_qr" max-width="700">
+        <v-card>
+            <v-card-actions>
+
+                Show QR code to receive tips
+                <v-spacer></v-spacer>
+
+                <v-btn icon @click="show_qr = false">
+                    <v-icon color="red">mdi-close</v-icon>
+                </v-btn>
+            </v-card-actions>
+
+            <div class="d-flex">
+                <v-spacer></v-spacer>
+                <div v-show="show_qr">
+                    <div class="bar--code black--text">
+                        <div class="container">
+                            <h4>Scan here to send a Tip</h4>
+                            <qr-code :to="`/tipp/${account_id}`" style="padding: 10px" id="qrCode12" :text="`https://tip-mee.netlify.app/tipp_wallet/${uid}`" :size="200"></qr-code>
+                            <p style="margin: 10px; color: red"></p>
+                        </div>
+                    </div>
+                </div>
+                <v-spacer></v-spacer>
+
+            </div>
+
+        </v-card>
+    </v-dialog>
+    <v-dialog v-model="depo_dialog" max-width="600">
+        <v-card>
+            <div class="">
+                <v-toolbar elevation="0" dark color="black">
+                    <v-card-title>Verify your account </v-card-title>
+                    <v-spacer />
+                    <v-btn icon @click="depo_dialog = false">
+                        <v-icon color="red">mdi-close</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-row>
+                    <v-col>
+                        <div class="container">
+                            <form>
+                                <v-row>
+                                    <v-col cols="12" md="12" v-show="!code_state">
+                                        <div class="container text-center">
+                                            <br />
+
+                                            <div class="container">
+                                                <v-spacer />
+                                                <div class="d-flex text-center">
+                                                    <div>
+                                                        <vue-country-code style="padding: 10px 6px 10px 6px" color="white" id="codePicker" elevation="0" aria-orientation="vertical" @onSelect="onSelect" defaultCountry="ke">
+                                                        </vue-country-code>
+                                                    </div>
+
+                                                    <v-text-field width="200" outlined v-model="phone_no_auth" :counter="16" type="number" label="Provide phone number"></v-text-field>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex">
+                                                <v-spacer />
+                                                <div id="recaptcha-container" data-sitekey="AIzaSyA0emGzJyErokuL84Eb_Fy4YWRxdXBi6Jo" data-callback="sendForm" data-size="visible"></div>
+                                                <v-spacer />
+                                            </div>
+
+                                            <v-btn color="black" class="green--text" @click="sendOtpForVerification()">Request OTP</v-btn>
+                                        </div>
+                                    </v-col>
+                                    <v-col v-show="code_state" cols="12" md="12" sm="12">
+                                        <div class="container">
+                                            <div class="d-flex">
+                                                <v-spacer />
+                                                <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
+                                                <v-spacer />
+                                            </div>
+
+                                            <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
+                                                {{ timerCount }} sec
+                                            </v-progress-circular>
+                                        </div>
+                                        <div class="container">
+                                            <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </form>
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-card-actions> </v-card-actions>
+            </div>
+        </v-card>
+    </v-dialog>
+    <v-dialog v-model="withdraw_dialog" width="300">
+        <v-card>
+            <div class="">
+                <v-toolbar elevation="0" dark color="black">
+                    <v-card-title>Withdraw </v-card-title>
+                    <v-spacer />
+                    <v-btn icon @click="withdraw_dialog = false">
+                        <v-icon color="red">mdi-close</v-icon>
+                    </v-btn>
+                </v-toolbar>
+
+                <div class="text-center">
+                    <div class="col-md-12">
+                        <v-spacer />
+                        <div class="">
+                            <v-form>
+                                <v-text-field width="200" clearable outlined v-model="balance" disabled type="number" label="Enter amount">
+                                </v-text-field>
+
+                                <label for="phoneNumber">Provide you mpesa number</label>
+                                <v-text-field v-model="withdraw_phone" :prefix="phonePrefix" filled placeholder="(75..545 format)" dense></v-text-field>
+
+                                <v-btn color="black" class="white--text" @click="b2c()">Withdraw ksh. <strong>-{{ withdraw_phone }}</strong></v-btn>
+                            </v-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </v-card>
+    </v-dialog>
+</div>
 </template>
 
 <script>
@@ -28,8 +389,6 @@ import firebase from "firebase/compat/app";
 import CryptoJS from "crypto-js";
 import Vue from "vue";
 import numeral from "numeral";
-import About from "@/components/About.vue";
-import Home from "@/components/Home.vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 // Register the Vue component
 Vue.component("qr-code", VueQRCodeComponent);
@@ -39,10 +398,6 @@ const ivKey = "smslt";
 
 export default {
     name: "IndexPage",
-    components: {
-        About,
-        Home,
-    },
     data() {
         return {
             phonePrefix: "254",
@@ -103,34 +458,6 @@ export default {
         };
     },
     methods: {
-        scrollToSection(id) {
-            const target = document.getElementById(id)
-            if (target.id != 'home') {
-                this.backToTop = true;
-            } else {
-                this.backToTop = false;
-            }
-
-            if (!target) return
-            const start = window.scrollY
-            const end = target.offsetTop
-            const distance = end - start
-            const duration = 800 // ms
-            let startTime = null
-
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-            }
-
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime
-                const timeElapsed = currentTime - startTime
-                const progress = Math.min(timeElapsed / duration, 1)
-                window.scrollTo(0, start + distance * easeInOutQuad(progress))
-                if (timeElapsed < duration) requestAnimationFrame(animation)
-            }
-            requestAnimationFrame(animation)
-        },
         CheckGoalProgress() {
             if (this.goalPercentage === 100) {
                 this.withdraw_dialog = true;
@@ -767,9 +1094,9 @@ export default {
         }
     },
     mounted() {
-      //  this.checkUser();
-      //  this.FetchProfile();
-       // this.FetchWallet();
+        this.checkUser();
+        this.FetchProfile();
+        this.FetchWallet();
     },
 };
 </script>

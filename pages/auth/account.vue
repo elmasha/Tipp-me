@@ -1,28 +1,13 @@
 <template>
 <div class="container">
-    <div class="container">
-        <v-progress-linear v-show="progress_bar" indeterminate color="green"></v-progress-linear>
-        <v-progress-linear v-show="progress_bar2" indeterminate color="green"></v-progress-linear>
-    </div>
+
     <v-row>
-        <v-col cols="12" md="6" lg="6" style="background-color: black">
-            <v-card color="black">
-                <div v-show="login" class="container">
-                    <v-img :src="home2" contain height="300"></v-img>
-                </div>
-                <div v-show="register" class="container">
-                    <v-img :src="home" contain height="300"></v-img>
-                </div>
-                <div v-show="security_key" class="container">
-                    <v-img :src="pin" contain height="300"></v-img>
-                </div>
-                <div v-show="set_Pin" contain class="container">
-                    <v-img :src="secquiz" contain height="300"></v-img>
-                </div>
-            </v-card>
-        </v-col>
-        <v-col cols="12" md="6" lg="6">
-            <v-card elevation="0" max-width="800">
+        <v-col cols="12" md="6">
+            <div class="">
+                <v-progress-linear v-show="progress_bar" indeterminate color="green"></v-progress-linear>
+                <v-progress-linear v-show="progress_bar2" indeterminate color="green"></v-progress-linear>
+            </div>
+            <v-card elevation="0"  >
                 <v-tabs color="black" center-active :show-arrows="true" class="text-center">
                     <v-tab v-show="!auth_state" @click="(register = false), (login = true)" value="one"><span>Log In</span></v-tab>
                     <v-tab v-show="!auth_state" value="two" @click="(register = true), (login = false)">
@@ -31,102 +16,111 @@
                 </v-tabs>
 
                 <v-row>
-                    <v-col v-show="register">
+                    <v-col>
                         <div class="container">
-                            <form>
-                                <v-text-field type="text" v-model="username" placeholder="Enter username">
-                                </v-text-field>
-                                <v-row>
-                                    <v-col cols="6">
-                                        <v-text-field type="text" v-model="phone" placeholder="Phone number">
-                                        </v-text-field>
-                                    </v-col>
 
-                                    <v-col cols="6">
-                                        <v-text-field type="number" v-model="goal_amount" placeholder="Goal amount">
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" md="6">
-                                        <v-textarea v-model="description" filled name="description" label="Description"></v-textarea>
-                                    </v-col>
+                            <v-text-field type="text" v-model="username" placeholder="Enter username">
+                            </v-text-field>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-text-field type="text" v-model="phone" placeholder="Phone number">
+                                    </v-text-field>
+                                </v-col>
 
-                                    <v-col cols="12" sm="6">
-                                        <v-select v-model="categotry" :items="items" label="Categotry"></v-select>
-                                    </v-col>
+                                <v-col cols="12">
+                                    <v-text-field type="number" v-model="goal_amount" placeholder="Goal amount">
+                                    </v-text-field>
+                                </v-col>
+                                <v-col cols="12" md="12">
+                                    <v-textarea v-model="description" filled name="description" label="Description"></v-textarea>
+                                </v-col>
 
-                                    <v-col cols="12" md="12">
-                                        <v-row>
-                                            <v-col cols="12" md="12" v-show="!code_state">
-                                                <div class="container text-center">
-                                                    <br />
+                                <v-col cols="12" md="12">
+                                    <!-- <v-select :items="items" label="Standard"></v-select> -->
+                                    <v-select :items="items" :menu-props="{ top: true, offsetY: true }" label="Label"></v-select>
+                                </v-col>
 
-                                                    <div class="container">
-                                                        <v-spacer />
-                                                        <div class="d-flex text-center">
-                                                            <div>
-                                                                <vue-country-code style="padding: 10px 6px 10px 6px" color="white" id="codePicker" elevation="0" aria-orientation="vertical" @onSelect="onSelect" defaultCountry="ke">
-                                                                </vue-country-code>
-                                                            </div>
+                                <v-col cols="12" sm="6">
+                                    <v-text-field type="email" v-model="email" placeholder="Enter email">
+                                    </v-text-field>
+                                </v-col>
 
-                                                            <v-text-field width="200" outlined v-model="phone_no_auth" :counter="16" type="number" label="Provide phone number"></v-text-field>
+                                <v-col cols="12" md="12">
+                                    <v-row>
+                                        <v-col cols="12" md="12" v-show="!code_state">
+                                            <div class="container text-center">
+                                                <br />
+
+                                                <div class="container">
+                                                    <v-spacer />
+                                                    <div class="d-flex text-center">
+                                                        <div>
+                                                            <vue-country-code style="padding: 10px 6px 10px 6px" color="white" id="codePicker" elevation="0" aria-orientation="vertical" @onSelect="onSelect" defaultCountry="ke">
+                                                            </vue-country-code>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="d-flex">
-                                                        <v-spacer />
-                                                        <div id="recaptcha-container" data-sitekey="AIzaSyA0emGzJyErokuL84Eb_Fy4YWRxdXBi6Jo" data-callback="sendForm" data-size="visible"></div>
-                                                        <v-spacer />
+                                                        <v-text-field width="200" outlined v-model="phone_no_auth" :counter="16" type="number" label="Provide phone number"></v-text-field>
                                                     </div>
+                                                </div>
 
-                                                    <v-btn color="black" class="green--text" @click="sendOtpForVerification()">Request OTP</v-btn>
+                                                <div class="d-flex">
+                                                    <v-spacer />
+                                                    <div id="recaptcha-container" data-sitekey="AIzaSyA0emGzJyErokuL84Eb_Fy4YWRxdXBi6Jo" data-callback="sendForm" data-size="visible"></div>
+                                                    <v-spacer />
                                                 </div>
-                                            </v-col>
-                                            <v-col v-show="code_state" cols="12" md="12" sm="12">
-                                                <div class="container">
-                                                    <div class="d-flex">
-                                                        <v-spacer />
-                                                        <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
-                                                        <v-spacer />
-                                                    </div>
 
-                                                    <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
-                                                        {{ timerCount }} sec
-                                                    </v-progress-circular>
-                                                </div>
-                                                <div class="container">
-                                                    <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
-                                                </div>
-                                            </v-col>
-                                        </v-row>
-                                    </v-col>
-                                    <v-col v-show="code_state_otp" cols="12" md="12" sm="12">
-                                        <div class="container">
-                                            <div class="d-flex">
-                                                <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
+                                                <v-btn color="black" class="green--text" @click="sendOtpForVerification()">Request OTP</v-btn>
                                             </div>
+                                        </v-col>
+                                        <v-col v-show="code_state" cols="12" md="12" sm="12">
+                                            <div class="container">
+                                                <div class="d-flex">
+                                                    <v-spacer />
+                                                    <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
+                                                    <v-spacer />
+                                                </div>
 
-                                            <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
-                                                {{ timerCount }} sec
-                                            </v-progress-circular>
+                                                <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
+                                                    {{ timerCount }} sec
+                                                </v-progress-circular>
+                                            </div>
+                                            <div class="container">
+                                                <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                                <v-col v-show="code_state_otp" cols="12" md="12" sm="12">
+                                    <div class="container">
+                                        <div class="d-flex">
+                                            <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
                                         </div>
-                                        <div class="container">
-                                            <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
-                                        </div>
-                                    </v-col>
 
-                                </v-row>
+                                        <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
+                                            {{ timerCount }} sec
+                                        </v-progress-circular>
+                                    </div>
+                                    <div class="container">
+                                        <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
+                                    </div>
+                                </v-col>
 
-                                <v-text-field type="email" v-model="email" placeholder="Enter email">
-                                </v-text-field>
+                            </v-row>
 
-                                <v-btn color="black--text" @click="loginAnonymously1">Sign Up</v-btn>
-                            </form>
+                            <v-btn color="black--text" @click="loginAnonymously1">Sign Up</v-btn>
+
                         </div>
                     </v-col>
 
                 </v-row>
             </v-card>
         </v-col>
+        <v-col cols="12" md="6" lg="6">
+
+            <!-- <v-img :src="home" /> -->
+
+        </v-col>
+
     </v-row>
     <v-dialog v-model="verify_submit">
         <v-card elevation="0">
@@ -731,4 +725,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<!-- 
+
+<style scoped></style> -->
