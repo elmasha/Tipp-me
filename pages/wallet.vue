@@ -116,7 +116,7 @@
 
                                                             <p>My Goal: KES <b>{{goal_amount }}</b></p>
                                                             <small>
-                                                                Raised KES <b>{{ goal_raised   }}</b>
+                                                                Raised KES <b>{{ balance   }}</b>
                                                             </small>
                                                             <div>
 
@@ -1088,7 +1088,7 @@ export default {
         goalPercentage() {
             if (!this.goal_amount) return 0
             const percent =
-                (this.goal_raised / this.goal_amount) * 100
+                (this.balance / this.goal_amount) * 100
 
             return Math.min(percent.toFixed(1), 100)
         }
