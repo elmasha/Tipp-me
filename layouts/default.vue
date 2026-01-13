@@ -108,7 +108,8 @@ export default {
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: ''
+            title: '',
+            uid:null,
         }
     },
     methods: {
@@ -152,7 +153,7 @@ export default {
         },
         checkUser() {
             if (this.$fire.auth.currentUser != null) {
-                this.secretKey = this.$fire.auth.currentUser.uid;
+                this.uid = this.$fire.auth.currentUser.uid;
                 this.auth_state = true;
             } else {
                 this.auth_state = false;
