@@ -449,7 +449,7 @@ export default {
             pending_balance: 0,
             goal_amount: 0,
             goal_raised: 0,
-            user_id: "",
+            user_id: 0,
             encryptedText: "",
             totalBalance: 0,
             withdraw_totalBalance: 0,
@@ -1094,6 +1094,7 @@ export default {
         }
     },
     mounted() {
+         this.user_id = 0;
         this.checkUser();
         this.FetchProfile();
         this.FetchWallet();
