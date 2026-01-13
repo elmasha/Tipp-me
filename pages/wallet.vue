@@ -17,9 +17,9 @@
                         </div>
                     </v-col>
                     <v-col cols="12" sm="12" md="12" class="parallax_about2">
-                        <v-card color="transparent" dark rounded shaped class="text-center " >
-                            <v-row >
-                                <v-col cols="12" sm="6" md="6" >
+                        <v-card color="transparent" dark rounded shaped class="text-center ">
+                            <v-row>
+                                <v-col cols="12" sm="6" md="6">
 
                                     <div class="text-center ">
                                         <v-card-subtitle>Tipp Me Wallet</v-card-subtitle>
@@ -60,7 +60,7 @@
                                             <v-spacer></v-spacer>
                                         </div>
                                     </div>
-                                   <br>
+                                    <br>
                                     <div>
                                         <div class="text-center">
                                             <v-card-actions>
@@ -98,7 +98,7 @@
                                         </div>
                                     </div>
                                 </v-col>
-                                <v-col cols="12" sm="6" md="6" >
+                                <v-col cols="12" sm="6" md="6">
                                     <div class="">
                                         <v-card elevation="0" color="green" light class="parallax_about">
                                             <v-card-title class="black--text">Goal Progress
@@ -1086,15 +1086,14 @@ export default {
     },
     computed: {
         goalPercentage() {
-            if (!this.goal_amount) return 0
-            const percent =
-                (this.balance / this.goal_amount) * 100
+
+            const percent = (this.balance / this.goal_amount) * 100
 
             return Math.min(percent.toFixed(1), 100)
         }
     },
     mounted() {
-         this.user_id = 0;
+        this.user_id = 0;
         this.checkUser();
         this.FetchProfile();
         this.FetchWallet();
