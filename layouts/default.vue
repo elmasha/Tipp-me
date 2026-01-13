@@ -98,11 +98,11 @@ export default {
                 },
                 {
                     title: 'Wallet',
-                    to: '/',
+                    to: '/wallet',
                 },
                 {
                     title: 'Terms & Conditions',
-                    to: '/',
+                    to: '/terms',
                 }
             ],
             miniVariant: false,
