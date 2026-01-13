@@ -268,7 +268,7 @@
                     <div class="bar--code black--text">
                         <div class="container">
                             <h4>Scan here to send a Tip</h4>
-                            <qr-code :to="`/tipp/${account_id}`" style="padding: 10px" id="qrCode12" :text="`https://tip-mee.netlify.app/tipp_wallet/${uid}`" :size="200"></qr-code>
+                            <qr-code :to="`/tipp/${account_id}`" style="padding: 10px" id="qrCode12" :text="qr_url" :size="400"></qr-code>
                             <p style="margin: 10px; color: red"></p>
                         </div>
                     </div>
@@ -455,6 +455,7 @@ export default {
             withdraw_totalBalance: 0,
             walletType: "Tip wallets",
             all_transactions: [],
+            qr_url:"",
         };
     },
     methods: {
@@ -633,6 +634,7 @@ export default {
                     that.user_id = response.data.user_id;
                     that.goal_amount = response.data.goal_amount;
                     that.goal_raised = response.data.goal_raised;
+                    that.qr_url = response.data.avatar_url;
                     that.FetchTransaction();
                     if (response.status == 200) {
                         // that.snackbar = true;
