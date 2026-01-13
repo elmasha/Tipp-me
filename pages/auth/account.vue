@@ -28,10 +28,9 @@
                             <v-text-field type="text" v-model="phone" color="green" placeholder="Phone number" outlined rounded>
                             </v-text-field>
 
-                            <v-progress-linear style="width: 90%;margin-left: 20px;" :size="10" width="1" :value="goal_amount" :max="10000" color="green" rounded/>
+                            <v-progress-linear style="width: 90%;margin-left: 20px;" :size="10" width="1" :value="goal_amount" :max="10000" color="green" rounded />
                             <v-text-field type="number" v-model="goal_amount" color="green" placeholder="Goal amount" outlined rounded>
                             </v-text-field>
-                            
 
                             <v-textarea v-model="description" filled name="description" color="green" label="Description" outlined rounded></v-textarea>
 
@@ -331,14 +330,23 @@ export default {
                         // that.snackbar = true;
                         // that.snackbarText = response.data;
                     } else if (response.status == 400) {
-                        // that.snackbar2 = true;
-                        // that.snackbarText2 = response.data.message;
+                        that.snackbar2 = true;
+                        that.snackbarText2 = response.data.message;
+                    } else if (response.status == 409) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = "Profile exists";
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
+                    if (response.status == 409) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = "Profile exists";
+                    } else {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = "Something went wrong try again later";
+
+                    }
                 });
 
         },
@@ -387,12 +395,21 @@ export default {
                     } else if (response.status == 400) {
                         // that.snackbar2 = true;
                         // that.snackbarText2 = response.data.message;
+                    } else if (response.status == 409) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = "Profile exists";
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
+                    if (response.status == 409) {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = "Profile exists";
+                    } else {
+                        that.snackbar2 = true;
+                        that.snackbarText2 = "Something went wrong try again later";
+
+                    }
                 });
 
         },
