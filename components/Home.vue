@@ -15,10 +15,10 @@
 
                         <div class="">
 
-                            <h1 class="" style="font-size: 1.9rem; font-weight: 900;">TipMe
+                            <h1 class="" style="font-size: 2.1rem; font-weight: 900;">TipMe
 
-                                <br>
-                                Tipping made easy.</h1>
+                            </h1>
+                            <h3>Tipping made easy.</h3>
                             <p class=" mb-4" style="font-size: 1.2rem;">
 
                                 Support creators, service staff, and causes instantly with M-Pesa.<br>
@@ -29,7 +29,7 @@
                                 <br>
                                 No app. No hassle. Just scan, tip, and smile.
                             </p>
-                            <v-btn rounded style="color: black;" color="green" large >Get started <v-icon right dark>
+                            <v-btn rounded style="color: black;" color="green" large>Get started <v-icon right dark>
                                     mdi-arrow-right-circle
                                 </v-icon>
                             </v-btn>
@@ -41,10 +41,10 @@
                 <v-col cols="12" md="12">
 
                     <div class="features">
-                        <h2>How its works</h2>
+                        <h2 style="color: #C6FF00;font-size: 1.5rem;">How its works</h2>
                         <p style="font-size: 1.1rem;">Tipping in 4 simple steps</p>
 
-                        <div class="container text-center">
+                        <div class=" text-center">
                             <div class="row">
                                 <div class="feature box ">
                                     <div class="icon-bg">
@@ -56,7 +56,7 @@
                                     <br>
                                     <br>
                                     <br>
-                                    <h4>Scan a QR code or open a link</h4>
+                                    <h4 style="font-size: 1.1rem;">Scan a QR code or open a link</h4>
                                 </div>
 
                                 <div class="feature box">
@@ -68,7 +68,7 @@
                                     <br>
                                     <br>
                                     <br>
-                                    <h4>Share your QR code or link.</h4>
+                                    <h4 style="font-size: 1.1rem;">Share your QR code or link.</h4>
                                 </div>
 
                                 <div class="feature box">
@@ -80,7 +80,7 @@
                                     <br>
                                     <br>
                                     <br>
-                                    <h4>Choose an amount & confirm with M-Pesa</h4>
+                                    <h4 style="font-size: 1.1rem;">Choose an amount & confirm with M-Pesa</h4>
                                 </div>
 
                                 <div class="feature box">
@@ -92,7 +92,7 @@
                                     <br>
                                     <br>
                                     <br>
-                                    <h4>Your support goes directly to the recipient</h4>
+                                    <h4 style="font-size: 1.1rem;">Your support goes directly to the recipient</h4>
                                 </div>
                             </div>
                         </div>
@@ -125,10 +125,7 @@
                         </div>
                     </div>
 
-                    
                 </v-col>
-
-           
 
             </v-row>
         </div>
@@ -183,29 +180,10 @@ export default {
         sendData(val) {
             this.$emit("send-data", val);
         },
-        async Fetch_Products() {
-            let that = this;
-            that.products.splice(that.products);
-            axios
-                .get("https://swisslifeserver-production.up.railway.app/api/products/products/tag/home", {})
-                .then(function (response) {
-                    if (response.status == 200) {
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
-                        that.products = response.data;
-                        console.log("products", that.products);
-                    } else if (response.status == 400) {
 
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-
-                });
-        },
     },
     mounted() {
-        this.Fetch_Products();
+
     }
 }
 </script>
@@ -301,7 +279,7 @@ export default {
 .features {
     justify-content: space-between;
     align-items: flex-start;
-    gap: 2rem;
+    gap: 1rem;
     padding: 3rem 2rem;
     background: #ffffff00;
     flex-wrap: wrap;
@@ -312,10 +290,10 @@ export default {
     position: relative;
     flex: 1;
     text-align: left;
-    margin: 9px;
+    margin: 6px;
     padding: 1.2rem 1.2rem;
     overflow: hidden;
-    min-width: 250px;
+    min-width: 300px;
     /* prevent text from becoming too narrow */
 }
 

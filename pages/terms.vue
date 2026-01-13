@@ -1,5 +1,10 @@
 <template>
-<v-app dark style="background-color: black;color: white;">
+<v-app dark style="background-color: black;color: white;" class="container parallax">
+    <div class="container">
+        <v-btn icon color="white" @click="$router.back()">
+            <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+    </div>
     <div class="d-flex">
 
         <v-chip-group column class="ma-4" active-class="green--text">
@@ -274,5 +279,17 @@ export default {
 <style scoped>
 h1 {
     font-size: 20px;
+}
+
+h3{
+    color:#C6FF00;
+}
+
+.parallax {
+    background-image: url('~/assets/more.svg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 </style>

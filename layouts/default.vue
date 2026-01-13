@@ -13,7 +13,7 @@
                     <nuxt-link id="link" to="/" style="margin: 4px;">Home</nuxt-link>
                 </v-list-item>
                 <v-list-item>
-                    <nuxt-link id="link" to="/about" style="margin: 4px;">About</nuxt-link>
+                    <nuxt-link id="link" to="/" style="margin: 4px;">About</nuxt-link>
                 </v-list-item>
                 <v-list-item>
                     <nuxt-link id="link" to="/wallet" style="margin: 4px;">Wallet</nuxt-link>
@@ -34,7 +34,7 @@
             <v-icon>mdi-bell-badge</v-icon>
         </v-btn>
 
-        <v-btn v-show="!auth_state" icon @click="logout()">
+        <v-btn v-show="auth_state" icon @click="logout()">
             <v-icon>mdi-logout</v-icon>
         </v-btn>
     </v-app-bar>
@@ -153,7 +153,6 @@ export default {
         checkUser() {
             if (this.$fire.auth.currentUser != null) {
                 this.secretKey = this.$fire.auth.currentUser.uid;
-                this.FetchUser();
                 this.auth_state = true;
             } else {
                 this.auth_state = false;

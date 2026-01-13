@@ -1,9 +1,9 @@
 export default function({ store, app, route, redirect }) {
-  if (route.path === "/") {
+  if (route.path === "/wallet") {
       //  we are on a protected route
       if (!app.$fire.auth.currentUser) {
           //take them to sign in page
-         // return redirect("/auth/account");
+          return redirect("/auth/account");
       } else {}
   } else if (route.path === "/auth/account") {
       if (!app.$fire.auth.currentUser) {
