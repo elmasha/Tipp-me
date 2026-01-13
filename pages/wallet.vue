@@ -563,7 +563,7 @@ export default {
         async stkPush() {
             let that = this;
             axios
-                .post(`https://tipp-meserver-production.up.railway.app/api/payments/stk-push`, {
+                .post(`https://tipp-meserver-production-5b51.up.railway.app/api/payments/stk-push`, {
                     uid: that.UID,
                     profile_id: that.user_id,
                     phone: that.phone_no2,
@@ -597,7 +597,7 @@ export default {
             }
 
             axios
-                .post(`https://tipp-meserver-production.up.railway.app/api/b2c/withdraw`, {
+                .post(`https://tipp-meserver-production-5b51.up.railway.app/api/b2c/withdraw`, {
                     uid: that.UID,
                     user_id: that.user_id,
                     phone: phone,
@@ -624,7 +624,7 @@ export default {
         async FetchProfile() {
             let that = this;
             axios
-                .get(`https://tipp-meserver-production.up.railway.app/api/profiles/uid/${that.UID}`, {
+                .get(`https://tipp-meserver-production-5b51.up.railway.app/api/profiles/uid/${that.UID}`, {
 
                 })
                 .then(function (response) {
@@ -652,7 +652,7 @@ export default {
         async FetchWallet() {
             let that = this;
             axios
-                .get(`https://tipp-meserver-production.up.railway.app/api/wallets/get-wallet/${that.UID}`, {
+                .get(`https://tipp-meserver-production-5b51.up.railway.app/api/wallets/get-wallet/${that.UID}`, {
 
                 })
                 .then(function (response) {
@@ -699,7 +699,7 @@ export default {
         FetchTransaction() {
             let that = this;
             axios
-                .get(`https://tipp-meserver-production.up.railway.app/api/wallets/get-ledger/${that.user_id}`, {
+                .get(`https://tipp-meserver-production-5b51.up.railway.app/api/wallets/get-ledger/${that.user_id}`, {
 
                 })
                 .then(function (response) {

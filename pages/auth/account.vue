@@ -318,7 +318,7 @@ export default {
         async StoreUSer(val) {
             let that = this;
             axios
-                .post(`https://tipp-meserver-production.up.railway.app/api/user/add_users`, {
+                .post(`https://tipp-meserver-production-5b51.up.railway.app/api/user/add_users`, {
                     uid: val,
                     phone: that.phone,
                 })
@@ -345,7 +345,7 @@ export default {
         async FetchProfile() {
             let that = this;
             axios
-                .get(`https://tipp-meserver-production.up.railway.app/api/profiles/uid/${that.UID}`, {
+                .get(`https://tipp-meserver-production-5b51.up.railway.app/api/profiles/uid/${that.UID}`, {
 
                 })
                 .then(function (response) {
@@ -368,14 +368,14 @@ export default {
         async StoreProfile(val) {
             let that = this;
             axios
-                .post(`https://tipp-meserver-production.up.railway.app/api/profiles/create_profile`, {
+                .post(`https://tipp-meserver-production-5b51.up.railway.app/api/profiles/create_profile`, {
                     user_id: val.id,
                     uid: that.UID,
                     username: that.username,
                     display_name: that.username + "_tp",
                     category: that.category,
                     description: that.description,
-                    avatar_url: `https://tip-mee.netlify.app/tipp_wallet/${that.username}`,
+                    avatar_url: `https://tip-mee.netlify.app/tipp_wallet/${that.UID}`,
                     goal_amount: that.goal_amount
                 })
                 .then(function (response) {

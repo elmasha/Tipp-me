@@ -11,8 +11,6 @@
         </v-col>
     </v-row>
    
-        
-   
 </v-app>
 </template>
 

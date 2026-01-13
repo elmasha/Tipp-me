@@ -20,7 +20,7 @@
      <br>
     <div v-show="terms">
         <section class="legal">
-            <h1>Terms & Conditions</h1>
+            <h1 style="font-size:2.2rem">Terms & Conditions</h1>
 
             <h3>1. Introduction</h3>
             <p>
@@ -132,7 +132,7 @@
         </section>
     </div>
     <div v-show="privacy">
-        <h1>PRIVACY POLICY </h1>
+        <h1 style="font-size:2.2rem">PRIVACY POLICY </h1>
         <h3>
             TipMe respects your privacy.</h3>
 
