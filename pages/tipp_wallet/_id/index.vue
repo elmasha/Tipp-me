@@ -267,7 +267,7 @@ export default {
             numeral,
             phonePrefix: "254",
             user_name: "",
-            user_id: null,
+            user_id: 0,
             goal_amount: 0,
             goal_raised: 0,
             UID: this.$route.params.id,
@@ -364,6 +364,7 @@ export default {
         }
     },
     mounted() {
+        this.user_id = 0;
         this.checkUser();
         console.log("UID ", this.$route.params.id);
         if (this.$route.params.id != null) {
@@ -487,7 +488,7 @@ export default {
                 .then(function (response) {
                     console.log("Show profile", response.data);
                     that.user_name = response.data.username;
-                    that.user_id = response.data.id;
+                    that.user_id = response.data.user_id;
                     that.goal_amount = response.data.goal_amount;
                     that.goal_raised = response.data.goal_raised;
                     // that.FetchTransaction();

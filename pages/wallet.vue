@@ -630,7 +630,7 @@ export default {
                 .then(function (response) {
                     console.log("Show profile", response.data);
                     that.user_name = response.data.username;
-                    that.user_id = response.data.id;
+                    that.user_id = response.data.user_id;
                     that.goal_amount = response.data.goal_amount;
                     that.goal_raised = response.data.goal_raised;
                     that.FetchTransaction();
