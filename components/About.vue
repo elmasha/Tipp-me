@@ -1,6 +1,6 @@
 <template>
 <v-app dark style="background-color: black;color: white;" class="parallax">
-    <div  >
+    <div>
 
         <div class="">
             <div class="container">
@@ -19,10 +19,10 @@
                         <v-col cols="12" md="4">
                             <div class="container">
 
-                                <h2 class="" style="font-size: 1.9rem; font-weight: 900;">
+                                <h2 class="" style="font-size: 1.9rem; font-weight: 900;color: #c8ff006c;">
                                     FOR CREATORS <br>
                                 </h2>
-                                <p class=" mb-4" style="font-size: 1.2rem;">
+                                <p class=" mb-4" style="font-size: 1rem;">
                                     Monetize your audience early
 
                                     You don’t need thousands of followers to earn. <br>
@@ -50,9 +50,9 @@
                         <v-col cols="12" md="4">
                             <div class="">
 
-                                <h2 class="" style="font-size: 1.9rem; font-weight: 900;">FOR BUSINESSES & <br> RESTAURANTS
+                                <h2 class="" style="font-size: 1.9rem; font-weight: 900;color: #c8ff006c;">FOR BUSINESSES & <br> RESTAURANTS
                                 </h2>
-                                <p class=" mb-4" style="font-size: 1.2rem;">
+                                <p class=" mb-4" style="font-size: 1rem;">
                                     Modern tipping without the headache
 
                                     No cash handling <br>
@@ -76,11 +76,11 @@
                         <v-col cols="12" md="12"></v-col>
                         <v-col cols="12" md="4"></v-col>
                         <v-col cols="12" md="4">
-                            <div class="">
+                            <div class="" >
 
-                                <h2 class="" style="font-size: 1.9rem; font-weight: 900;">GOALS & <br> TRANSPARENCY
+                                <h2 class="" style="font-size: 1.9rem; font-weight: 900;color: #c8ff006c;">GOALS & <br> TRANSPARENCY
                                 </h2>
-                                <p class=" mb-4" style="font-size: 1.2rem;">
+                                <p class=" mb-4" style="font-size: 1rem;">
                                     Raise with confidence <br>
 
                                     Set a goal. <br>
@@ -252,6 +252,11 @@ export default {
 
 .box1 {
     background-color: rgb(255 255 255 / 30%);
+    backdrop-filter: blur(14px);
+}
+
+.box1 {
+    background-color: #c8ff006c;
     backdrop-filter: blur(14px);
 }
 

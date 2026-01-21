@@ -100,7 +100,8 @@
                                 <div class="d-flex">
                                     <v-spacer></v-spacer>
 
-                                    <button type="button" class="button" v-for="a in [50,100,200,500]" @click="amount_input=a">
+                                    <div class="row">
+<button type="button" class="button row" v-for="a in [50,100,200,500,1000,2000,3000,4000,5000]" @click="amount_input=a">
 
                                         <span class="fold"></span>
 
@@ -121,6 +122,8 @@
                                                 <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"></polyline>
                                             </svg> KES {{ a }}</span>
                                     </button>
+                                    </div>
+                                    
                                     <v-spacer></v-spacer>
                                     <!-- <button style="margin: 2px; background-color: aliceblue; color: #000;padding: 10px; font-size: 1.2rem;border-radius: 9px;" v-for="a in [50,100,200,500]" @click="amount_input=a">
                                         KES {{ a }}
@@ -131,10 +134,10 @@
                             {{ text }}
                             <div class="d-flex">
                                 <v-spacer />
-                                <v-card color="white" light min-width="300">
+                                <v-card color="black" light min-width="300" dark>
                                     <v-card-text>
 
-                                        <label for="voteCount">Enter amount to tip <b>{{user_name}}</b></label>
+                                        <label for="voteCount">Enter amount to tip <b style="color: #C6FF00;">{{user_name}}</b></label>
                                         <v-text-field diable v-model="amount_input" filled placeholder="Enter amount" type="number" dense></v-text-field>
 
                                         <label for="phoneNumber">Provide you mpesa number</label>
@@ -162,8 +165,8 @@
 
                                             <div class="text-center">
                                                 <h4>Tip me</h4>
-                                                <v-btn color="black" fab dark medium @click="stkPush">
-                                                    <v-icon color="green">mdi-cash-fast</v-icon>
+                                                <v-btn color="white" fab dark medium @click="stkPush">
+                                                    <v-icon color="black">mdi-cash-fast</v-icon>
                                                 </v-btn>
                                             </div>
                                             <v-spacer />

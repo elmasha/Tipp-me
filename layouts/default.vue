@@ -152,15 +152,17 @@ export default {
                 });
         },
         checkUser() {
-            if (this.$fire.auth.currentUser != null) {
-                this.uid = this.$fire.auth.currentUser.uid;
-                this.auth_state = true;
-            } else {
-                this.auth_state = false;
-            }
+            
         },
         mounted() {
-            this.checkUser();
+           if (this.$fire.auth.currentUser.uid != null) {
+                // this.uid = this.$fire.auth.currentUser.uid;
+                this.auth_state = true;
+                console.log(this.auth_state)
+            } else {
+                this.auth_state = false;
+                 console.log(this.auth_state)
+            }
         },
     },
 }

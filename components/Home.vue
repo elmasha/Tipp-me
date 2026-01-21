@@ -7,7 +7,7 @@
             <v-row>
 
                 <v-col cols="12" md="12" class="fade-in-right">
-                    <div class=" container ">
+                    <div class=" container text-center">
 
                         <v-card color="transparent" v-show="!showBurger" height="90" elevation="0">
 
@@ -18,17 +18,19 @@
                             <h1 class="" style="font-size: 2.1rem; font-weight: 900;">TipMe
 
                             </h1>
-                            <h3>Tipping made easy.</h3>
-                            <p class=" mb-4" style="font-size: 1.2rem;">
+                            <h3 style="color: #C6FF00;">Tipping made easy.</h3>
+                            
 
-                                Support creators, service staff, and causes instantly with M-Pesa.<br>
-
-                                <br>
-                                <b>Simple, local, and built for Kenya 🇰🇪</b> <br>
-                                TipMe is a digital tipping and micro-fundraising platform <br> That lets anyone receive support through M-Pesa using a QR code or link.<br>
-                                <br>
-                                No app. No hassle. Just scan, tip, and smile.
-                            </p>
+                            <v-carousel :continuous="false" :cycle="cycle" :show-arrows="false" width="100%" hide-delimiters height="250">
+                                <v-carousel-item v-for="(slide, i) in slides" :key="i">
+                                    <v-row class="fill-height" align="center" justify="center">
+                                        <div class="text-h2 white-text">
+                                          <h2 style="color: aliceblue; font-size: 1.9rem;padding: 10px;">  {{ slide }}</h2>
+                                        </div>
+                                    </v-row>
+                                </v-carousel-item>
+                            </v-carousel>
+                            <br>
                             <v-btn rounded style="color: black;" color="green" large>Get started <v-icon right dark>
                                     mdi-arrow-right-circle
                                 </v-icon>
@@ -158,6 +160,14 @@ export default {
             qr_share,
             products: [],
             numeral,
+            
+            cycle: true,
+            slides: [
+                'Simple, local, and built for Kenya 🇰🇪',
+                'TipMe is a digital tipping and micro-fundraising platform',
+                'That lets anyone receive support through M-Pesa using a QR code or link.',
+                'No app. No hassle. Just scan, tip, and smile.',
+            ],
             items_c: [{
                     src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
                 },
@@ -280,7 +290,7 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    padding: 3rem 2rem;
+    padding: 1rem 1rem;
     background: #ffffff00;
     flex-wrap: wrap;
     /* allow wrapping on small screens */

@@ -13,15 +13,42 @@
             </div>
             <v-card dark elevation="0" color="transparent" class="box">
                 <v-tabs dark color="green" center-active :show-arrows="true" class="text-center">
-                    <v-tab v-show="!auth_state" value="two" @click="(register = true), (login = false)">
+                    <v-tab value="two" @click="(register = false), (login = true)">
+                        <span>Login</span></v-tab>
+
+                    <v-tab value="two" @click="(register = true), (login = false)">
                         <span>New Account</span></v-tab>
 
                 </v-tabs>
 
-                <div>
+                <div v-show="login" class="text-start">
                     <form>
 
                         <div class="contianer" style="margin: 30px;">
+                            <v-card-text>
+                                <p>Provide all reqiured fields ana statrt receiving tips</p>
+                            </v-card-text>
+
+                            <v-text-field type="email" v-model="auth.email" placeholder="Enter email" color="green" outlined rounded>
+                            </v-text-field>
+                            <v-text-field type="password" v-model="auth.password" placeholder="Enter password" color="green" outlined rounded>
+                            </v-text-field>
+
+                        </div>
+
+                    </form>
+                    <div class="container">
+                        <v-btn rounded color="green" style="color: black;" class="black-text" width="50%" @click="loginAuth">Log in</v-btn>
+                    </div>
+
+                </div>
+                <div v-show="register">
+                    <form>
+
+                        <div class="contianer" style="margin: 30px;">
+                            <v-card-text>
+                                <p>Provide all reqiured fields ana statrt receiving tips</p>
+                            </v-card-text>
                             <v-text-field type="text" v-model="username" color="green" placeholder="Enter username" outlined rounded>
                             </v-text-field>
 
@@ -37,7 +64,11 @@
                             <!-- <v-select :items="items" label="Standard"></v-select> -->
                             <v-select v-model="category" :items="items" label="Label" color="green" outlined rounded></v-select>
 
-                            <v-text-field type="email" v-model="email" placeholder="Enter email" color="green" outlined rounded>
+                            <v-text-field type="email" v-model="auth.email" placeholder="Enter email" color="green" outlined rounded>
+                            </v-text-field>
+                            <v-text-field type="password" v-model="auth.password" placeholder="Enter password" color="green" outlined rounded>
+                            </v-text-field>
+                            <v-text-field type="password" v-model="password_match" placeholder="ReEnter password" color="green" outlined rounded>
                             </v-text-field>
                             <v-checkbox v-model="checkbox" color="green">
                                 <template v-slot:label>
@@ -56,69 +87,11 @@
                             </v-checkbox>
                         </div>
 
-                        <!-- <v-row>
-                                <v-col cols="12" md="12" v-show="!code_state">
-                                    <div class="container text-center">
-                                        <br />
-
-                                        <div class="container">
-                                            <v-spacer />
-                                            <div class="d-flex text-center">
-                                                <div>
-                                                    <vue-country-code style="padding: 10px 6px 10px 6px" color="white" id="codePicker" elevation="0" aria-orientation="vertical" @onSelect="onSelect" defaultCountry="ke">
-                                                    </vue-country-code>
-                                                </div>
-
-                                                <v-text-field width="200" outlined v-model="phone_no_auth" :counter="16" type="number" label="Provide phone number"></v-text-field>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex">
-                                            <v-spacer />
-                                            <div id="recaptcha-container" data-sitekey="AIzaSyA0emGzJyErokuL84Eb_Fy4YWRxdXBi6Jo" data-callback="sendForm" data-size="visible"></div>
-                                            <v-spacer />
-                                        </div>
-
-                                        <v-btn color="black" class="green--text" @click="sendOtpForVerification()">Request OTP</v-btn>
-                                    </div>
-                                </v-col>
-                                <v-col v-show="code_state" cols="12" md="12" sm="12">
-                                    <div class="container">
-                                        <div class="d-flex">
-                                            <v-spacer />
-                                            <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
-                                            <v-spacer />
-                                        </div>
-
-                                        <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
-                                            {{ timerCount }} sec
-                                        </v-progress-circular>
-                                    </div>
-                                    <div class="container">
-                                        <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
-                                    </div>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-                        <v-col v-show="code_state_otp" cols="12" md="12" sm="12">
-                            <div class="container">
-                                <div class="d-flex">
-                                    <v-otp-input v-model="code_no" :disabled="loading" @finish="onFinish" length="6"></v-otp-input>
-                                </div>
-
-                                <v-progress-circular v-show="show66" :rotate="360" :size="20" :width="8" :value="timerCount" color="secondary">
-                                    {{ timerCount }} sec
-                                </v-progress-circular>
-                            </div>
-                            <div class="container">
-                                <v-btn color="black" class="green--text" @click="ConfirmCode">Verify Code</v-btn>
-                            </div>
-                        </v-col> -->
-
                     </form>
+                    <div class="container">
+                        <v-btn rounded color="green" style="color: black;" class="black-text" width="100%" @click="signUp">Sign Up</v-btn>
+                    </div>
                 </div>
-
-                <v-btn rounded color="green" style="color: black;" class="black-text" width="100%" @click="loginAnonymously1">Sign Up</v-btn>
 
             </v-card>
         </v-col>
@@ -171,6 +144,8 @@ const ivKey = "smslt";
 export default {
     data() {
         return {
+            password: null,
+            password_match: null,
             checkbox: false,
             showHeroCard: true,
             showBurger: true,
@@ -211,8 +186,8 @@ export default {
             snackbar2: false,
             showLogin: false,
             snackbarText2: "",
-            login: false,
-            register: true,
+            login: true,
+            register: false,
             user_name: "",
             first_name: "",
             last_name: "",
@@ -266,6 +241,10 @@ export default {
             description: "",
             avatar_url: "",
             goal_amount: "",
+            auth: {
+                email: "",
+                password: "",
+            },
         };
     },
     watch: {
@@ -300,6 +279,57 @@ export default {
         this.generateRandomNumber();
     },
     methods: {
+        loginAuth() {
+            let that = this;
+            that.progress_bar = true;
+            const mAuth = this.$fire.auth;
+            mAuth
+                .signInWithEmailAndPassword(this.auth.email, this.auth.password)
+                .catch(function (error) {
+                    that.snackbarText = error.message;
+                    that.snackbar = true;
+                    that.progress_bar = false;
+                })
+                .then((user) => {
+                    that.progress_bar = false;
+                    //we are signed in
+                    that.$router.push("/wallet");
+                });
+        },
+        signUp() {
+            if ( this.username == null || this.category == null || this.description == null ||
+                this.goal_amount == null || this.phone == null || this.auth.email == "" || this.auth.password == "") {
+                this.snackbar2 = true;
+                this.snackbarText2 = "Provide input from the required fields";
+
+            } else if (this.checkbox == false) {
+                this.snackbar2 = true;
+                this.snackbarText2 = "Agree to the terms and conditions";
+
+            } else if (this.password_match !== this.auth.password) {
+                this.snackbar2 = true;
+                this.snackbarText2 = "Password dont not match";
+
+            } else {
+                const mAuth = this.$fire.auth;
+                this.progress_bar2 = true;
+                // if (this.password === this.registrationPassword) {
+                mAuth
+                    .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
+                    .catch((error) => {
+                        console.log(error);
+                        this.snackbar2 = true;
+                        this.snackbarText2 = error;
+                        this.progress_bar2 = false;
+                    })
+                    .then((user) => {
+                        const start_time = this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss");
+                        this.UID = user.user.uid;
+                        this.StoreUSer(user.user.uid)
+                        this.show_auth = true;
+                    });
+            }
+        },
         onResize() {
             this.windowSize = {
                 x: window.innerWidth,
@@ -389,6 +419,9 @@ export default {
                 .then(function (response) {
                     console.log("Place profile", response.data);
                     alert("Account created successfully")
+                    that.$router.push({
+                        path: "/wallet",
+                    });
                     if (response.status == 200) {
                         // that.snackbar = true;
                         // that.snackbarText = response.data;
@@ -414,20 +447,33 @@ export default {
 
         },
         loginAnonymously1() {
-            this.$fire.auth
-                .signInAnonymously()
-                .catch(function (error) {
-                    this.snackbarText = error.message;
-                    this.snackbar = true;
-                    this.showLogin = false;
-                })
-                .then((user) => {
-                    //we are signed in
-                    const start_time = this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss");
-                    this.UID = user.user.uid;
-                    this.StoreUSer(user.user.uid)
-                    this.show_auth = true;
-                });
+            if (this.name == null || this.username == null || this.category == null || this.description == null ||
+                this.goal_amount == null || this.phone == null || this.email == null
+            ) {
+                this.snackbar2 = true;
+                this.snackbarText2 = "Provide input from the required fields";
+
+            } else if (this.checkbox == false) {
+                this.snackbar2 = true;
+                this.snackbarText2 = "Agree to the terms and conditions";
+
+            } else {
+                this.$fire.auth
+                    .signInAnonymously()
+                    .catch(function (error) {
+                        this.snackbarText = error.message;
+                        this.snackbar = true;
+                        this.showLogin = false;
+                    })
+                    .then((user) => {
+                        //we are signed in
+                        const start_time = this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss");
+                        this.UID = user.user.uid;
+                        this.StoreUSer(user.user.uid)
+                        this.show_auth = true;
+                    });
+            }
+
         },
         FetchUserPin() {
             const db = this.$fire.firestore;
@@ -496,7 +542,7 @@ export default {
                         this.confirmation_Result = confirmationResult;
                         this.progress_bar = false;
                         this.timerEnabled = true;
-                        if (this.confirmation_Result.verificationId != null) {
+                        if (this.confirmation_Result.verificationId == null) {
                             this.code_state_otp = true;
                             this.code_state = false;
                         }
@@ -691,7 +737,7 @@ export default {
             if (this.secretKey == null) {
                 this.pass_status = "UnAble detect key";
             } else {
-                if (data != null) {
+                if (data == null) {
                     const key = CryptoJS.PBKDF2(this.secretKey, "salt", {
                         keySize: 256 / 32,
                         iterations: 1000,
@@ -754,7 +800,7 @@ export default {
             return randomNumber;
         },
         checkUser() {
-            if (this.$fire.auth.currentUser != null) {
+            if (this.$fire.auth.currentUser == null) {
                 this.FetchUserPin();
                 this.secretKey = this.$fire.auth.currentUser.uid;
             } else {
