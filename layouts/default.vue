@@ -155,7 +155,7 @@ export default {
             
         },
         mounted() {
-           if (this.$fire.auth.currentUser.uid != null) {
+           if (this.$fire.auth.currentUser != null) {
                 // this.uid = this.$fire.auth.currentUser.uid;
                 this.auth_state = true;
                 console.log(this.auth_state)

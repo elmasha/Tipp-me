@@ -19,7 +19,7 @@
      <br>
      <br>
     <div v-show="terms">
-        <section class="legal">
+        
             <h1 style="font-size:2.2rem">Terms & Conditions</h1>
 
             <h3>1. Introduction</h3>
@@ -129,7 +129,7 @@
             <h3>9. Governing Law</h3>
 
             <p>These Terms are governed by and construed in accordance with the laws of the Republic of Kenya.</p>
-        </section>
+        
     </div>
     <div v-show="privacy">
         <h1 style="font-size:2.2rem">PRIVACY POLICY </h1>

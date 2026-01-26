@@ -30,7 +30,7 @@
                                 </v-carousel-item>
                             </v-carousel>
                             <br>
-                            <v-btn rounded style="color: black;" color="green" large>Get started <v-icon right dark>
+                            <v-btn rounded style="color: black;" to="/wallet" color="green" large>Get started <v-icon right dark>
                                     mdi-arrow-right-circle
                                 </v-icon>
                             </v-btn>
@@ -41,58 +41,56 @@
 
                 <v-col cols="12" md="12">
 
-                    <div class="features text-center">
-                        <h2 style="color: #C6FF00;font-size: 1.5rem;">How its works</h2>
-                        <p style="font-size: 1.1rem;">Tipping in 4 simple steps</p>
+                    <div class="features text-center ">
+                        <div class="container">
+                            <h2 style="color: #C6FF00;font-size: 1.9rem;">How its works</h2>
+                            <p style="font-size: 1.1rem;">Tipping in 4 simple steps</p>
 
-                        <div class=" text-center">
-                            <div class="row">
+                        </div>
+                        <div class="container text-center">
+                            <div class="row text-center">
                                 <div class="feature box ">
                                     <div class="icon-bg">
-                                        <v-img :src="qr" alt="delivery icon" height="90" contain style="margin-left: 10px; margin-top: 10px;" />
+                                        <v-img :src="qr" alt="delivery icon" height="60" contain style="margin-left: 10px; margin-top: 10px;" />
                                     </div>
 
                                     <h3></h3>
                                     <br>
                                     <br>
-                                    <br>
-                                    <br>
+
                                     <h4 style="font-size: 1.1rem;">Scan a QR code or open a link</h4>
                                 </div>
 
                                 <div class="feature box">
                                     <div class="icon-bg">
-                                        <v-img :src="qr_share" alt="pharmacy support icon" height="90" contain style="margin-left: 10px; margin-top: 10px;" />
+                                        <v-img :src="qr_share" alt="pharmacy support icon" height="60" contain style="margin-left: 10px; margin-top: 10px;" />
                                     </div>
                                     <h3></h3>
                                     <br>
                                     <br>
-                                    <br>
-                                    <br>
+
                                     <h4 style="font-size: 1.1rem;">Share your QR code or link.</h4>
                                 </div>
 
                                 <div class="feature box">
                                     <div class="icon-bg">
-                                        <v-img :src="amount" alt="affordable prices icon" contain height="90" />
+                                        <v-img :src="amount" alt="affordable prices icon" contain height="60" />
                                     </div>
                                     <h3></h3>
                                     <br>
                                     <br>
-                                    <br>
-                                    <br>
+
                                     <h4 style="font-size: 1.1rem;">Choose an amount & confirm with M-Pesa</h4>
                                 </div>
 
                                 <div class="feature box">
                                     <div class="icon-bg">
-                                        <v-img :src="chart" alt="affordable prices icon" contain height="90" />
+                                        <v-img :src="chart" alt="affordable prices icon" contain height="60" />
                                     </div>
                                     <h3></h3>
                                     <br>
                                     <br>
-                                    <br>
-                                    <br>
+
                                     <h4 style="font-size: 1.1rem;">Your support goes directly to the recipient</h4>
                                 </div>
                             </div>
