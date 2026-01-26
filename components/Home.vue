@@ -41,7 +41,7 @@
 
                 <v-col cols="12" md="12">
 
-                    <div class="features">
+                    <div class="features text-center">
                         <h2 style="color: #C6FF00;font-size: 1.5rem;">How its works</h2>
                         <p style="font-size: 1.1rem;">Tipping in 4 simple steps</p>
 
