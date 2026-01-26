@@ -397,6 +397,7 @@ const keyValue = "fd85b4945YF'i"; // your key value (eg: key)
 const ivKey = "smslt";
 
 export default {
+    middleware: 'auth',
     name: "IndexPage",
     data() {
         return {

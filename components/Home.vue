@@ -19,13 +19,12 @@
 
                             </h1>
                             <h3 style="color: #C6FF00;">Tipping made easy.</h3>
-                            
 
                             <v-carousel :continuous="false" :cycle="cycle" :show-arrows="false" width="100%" hide-delimiters height="250">
                                 <v-carousel-item v-for="(slide, i) in slides" :key="i">
                                     <v-row class="fill-height" align="center" justify="center">
                                         <div class="text-h2 white-text">
-                                          <h2 style="color: aliceblue; font-size: 1.9rem;padding: 10px;">  {{ slide }}</h2>
+                                            <h2 style="color: aliceblue; font-size: 1.7rem;padding: 10px;"> {{ slide }}</h2>
                                         </div>
                                     </v-row>
                                 </v-carousel-item>
@@ -50,7 +49,7 @@
                             <div class="row">
                                 <div class="feature box ">
                                     <div class="icon-bg">
-                                        <v-img :src="qr" alt="delivery icon" style="margin-left: 10px; margin-top: 10px;" />
+                                        <v-img :src="qr" alt="delivery icon" height="90" contain style="margin-left: 10px; margin-top: 10px;" />
                                     </div>
 
                                     <h3></h3>
@@ -63,7 +62,7 @@
 
                                 <div class="feature box">
                                     <div class="icon-bg">
-                                        <v-img :src="qr_share" alt="pharmacy support icon" style="margin-left: 10px; margin-top: 10px;" />
+                                        <v-img :src="qr_share" alt="pharmacy support icon" height="90" contain style="margin-left: 10px; margin-top: 10px;" />
                                     </div>
                                     <h3></h3>
                                     <br>
@@ -75,7 +74,7 @@
 
                                 <div class="feature box">
                                     <div class="icon-bg">
-                                        <v-img :src="amount" alt="affordable prices icon" />
+                                        <v-img :src="amount" alt="affordable prices icon" contain height="90" />
                                     </div>
                                     <h3></h3>
                                     <br>
@@ -87,7 +86,7 @@
 
                                 <div class="feature box">
                                     <div class="icon-bg">
-                                        <v-img :src="chart" alt="affordable prices icon" />
+                                        <v-img :src="chart" alt="affordable prices icon" contain height="90" />
                                     </div>
                                     <h3></h3>
                                     <br>
@@ -160,7 +159,7 @@ export default {
             qr_share,
             products: [],
             numeral,
-            
+
             cycle: true,
             slides: [
                 'Simple, local, and built for Kenya 🇰🇪',
@@ -200,7 +199,7 @@ export default {
 
 <style scoped>
 .box {
-    background-color: rgb(255 255 255 / 30%);
+    background-color: rgba(255, 255, 255, 0.048);
     backdrop-filter: blur(5px);
     border-radius: 12px;
 }

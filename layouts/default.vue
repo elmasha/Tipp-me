@@ -34,7 +34,7 @@
             <v-icon>mdi-bell-badge</v-icon>
         </v-btn>
 
-        <v-btn v-show="auth_state" icon @click="logout()">
+        <v-btn v-if="!auth_state" icon @click="logout()">
             <v-icon>mdi-logout</v-icon>
         </v-btn>
     </v-app-bar>

@@ -38,7 +38,7 @@
 
                     </form>
                     <div class="container">
-                        <v-btn rounded color="green" style="color: black;" class="black-text" width="50%" @click="loginAuth">Log in</v-btn>
+                        <v-btn rounded color="green" style="color: black;" class="black-text" width="100%" @click="loginAuth">Log in</v-btn>
                     </div>
 
                 </div>
@@ -273,7 +273,7 @@ export default {
         },
     },
     mounted() {
-        this.checkUser();
+
     },
     created() {
         this.generateRandomNumber();
@@ -297,7 +297,7 @@ export default {
                 });
         },
         signUp() {
-            if ( this.username == null || this.category == null || this.description == null ||
+            if (this.username == null || this.category == null || this.description == null ||
                 this.goal_amount == null || this.phone == null || this.auth.email == "" || this.auth.password == "") {
                 this.snackbar2 = true;
                 this.snackbarText2 = "Provide input from the required fields";
@@ -475,40 +475,7 @@ export default {
             }
 
         },
-        FetchUserPin() {
-            const db = this.$fire.firestore;
-            db.collection("Tipp_user")
-                .where("user_uid", "==", this.$fire.auth.currentUser.uid)
-                .get()
-                .then((queryResult) => {
-                    queryResult.forEach((doc) => {
-                        this.security_key = doc.data().security_key;
-                        this.user_name = doc.data().user_name;
-                        if (doc.data().pin == null) {
-                            this.set_Pin = true;
-                            this.login = false;
-                            this.register = false;
-                            this.auth_state = true;
-                            this.security_quiz = false;
-                            this.progress_bar = false;
-                        } else if (doc.data().security_quiz == false) {
-                            this.set_Pin = false;
-                            this.login = false;
-                            this.register = false;
-                            this.auth_state = true;
-                            this.security_quiz = true;
-                            this.progress_bar = false;
-                        } else {
-                            this.$router.push({
-                                path: "/",
-                            });
-                        }
 
-                        // console.log(doc.data())
-                        console.log(this.decrypteData(doc.data().pin));
-                    });
-                });
-        },
         configureRecaptcha() {
             window.recaptchaVerifier = new this.$fireModule.auth.RecaptchaVerifier(
                 "recaptcha-container", {
@@ -593,87 +560,7 @@ export default {
                     });
             }
         },
-        storeUserDetails() {
-            const db = this.$fire.firestore;
-            db.collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .set({
-                    user_name: this.user_name,
-                    name: this.first_name + "_" + this.last_name,
-                    member: false,
-                    phone: this.phone_no,
-                    pin: null,
-                    security_quiz: false,
-                    user_uid: this.$fire.auth.currentUser.uid,
-                })
-                .then((docRef) => {
-                    console.log("Registration  success: ");
-                    this.snackbar = true;
-                    this.progress_bar = false;
-                    this.snackbarText = "Registration success";
-                    this.FetchUserPin();
-                })
-                .catch((error) => {
-                    this.snackbar2 = true;
-                    this.snackbarText2 = error;
-                    this.progress_bar = false;
-                    console.error("Error adding listing: ", error);
-                });
-        },
-        setPin() {
-            if (this.password_status == false) {
-                this.snackbar2 = true;
-                this.snackbarText2 = "Password does not match";
-            } else {
-                this.progress_bar = true;
-                const db = this.$fire.firestore;
-
-                const docRef = db.collection("Tipp_user").doc(this.$fire.auth.currentUser.uid);
-                const docRef2 = db
-                    .collection("Tipp_user")
-                    .doc(this.$fire.auth.currentUser.uid)
-                    .collection("Tipp_wallet")
-                    .doc(this.$fire.auth.currentUser.uid);
-
-                const newData = {
-                    pin: this.encrypteData(this.verify_pin),
-                    Account_id: this.encrypteData(
-                        this.$fire.auth.currentUser.uid + this.user_name + this.phone + new Date()
-                    ),
-                    // Add more fields as needed
-                };
-
-                const newData2 = {
-                    pin: this.encrypteData(this.verify_pin),
-                    Account_id: this.encrypteData(
-                        this.$fire.auth.currentUser.uid + this.user_name + this.phone + new Date()
-                    ),
-                    user_name: this.user_name,
-                    user_uid: this.$fire.auth.currentUser.uid,
-                    balance: "0",
-                    // Add more fields as needed
-                };
-
-                db.runTransaction(async (transaction) => {
-                        transaction.update(docRef, newData);
-                        transaction.set(docRef2, newData2);
-                    })
-                    .then((docRef) => {
-                        console.log("Pin set Successfully ");
-                        this.snackbar = true;
-                        this.snackbarText = "Pin set Successfully ";
-                        this.progress_bar = false;
-                        this.FetchUserPin();
-                    })
-                    .catch((error) => {
-                        this.snackbar2 = true;
-                        this.snackbarText2 = error;
-                        this.progress_bar = false;
-                        console.error("Error adding listing: ", error);
-                    });
-            }
-        },
-        storeSecurityQuestions() {
+        SecurityQuestions() {
             const db = this.$fire.firestore;
             if (
                 (this.q11 == null) |
