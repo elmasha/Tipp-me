@@ -35,7 +35,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    "@/plugins/countryCode.js"
+    "@/plugins/countryCode.js",{ src: "~/plugins/pdf.client.js", mode: "client" }
   ],
 
 
@@ -61,6 +61,12 @@ export default {
     '@nuxtjs/moment',
     '@nuxtjs/dayjs'
   ],
+
+  dayjs: {
+  locales: ["en"],
+  defaultLocale: "en",
+  plugins: ["relativeTime"]
+},
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

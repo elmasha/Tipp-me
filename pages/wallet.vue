@@ -78,7 +78,7 @@
 
                                                         <div style="margin: 8px" class="text-center">
 
-                                                            <v-btn style="margin: 0px" fab small color="#202020" class="red--text text-center" @click="CheckGoalProgress()">
+                                                            <v-btn style="margin: 0px" fab small color="#202020" class="red--text text-center" @click="withdraw_dialog = true">
                                                                 <v-icon>mdi-arrow-down-circle</v-icon>
                                                             </v-btn>
                                                             <h5>Withdraw</h5>
@@ -116,7 +116,7 @@
 
                                                             <p>My Goal: KES <b>{{goal_amount }}</b></p>
                                                             <small>
-                                                                Raised KES <b>{{ balance   }}</b>
+                                                                Raised KES <b>{{ pending_balance   }}</b>
                                                             </small>
                                                             <div>
 
@@ -214,8 +214,9 @@
                                                                     <div class="d-flex">
                                                                         <p style="font-size: 0.9rem; color: #808080;"> {{ flight.reference }}</p>
                                                                         <v-spacer></v-spacer>
+
                                                                         {{
-                                                $moment(flight.print_date).format("MMM Do YYYY, h:mm a")
+                                                $dayjs(flight.created_at).fromNow()
                                             }}
                                                                     </div>
                                                                 </v-list-item-subtitle>
@@ -251,30 +252,47 @@
     </v-card>
 
     <v-dialog v-model="show_qr" max-width="700">
-        <v-card>
+
+        <!-- v-btn -->
+
+        <v-card class="container">
             <v-card-actions>
 
                 Show QR code to receive tips
                 <v-spacer></v-spacer>
-
+                <v-btn icon @click="exportToPDF">
+                    <v-icon color="black">mdi-download</v-icon>
+                </v-btn>
                 <v-btn icon @click="show_qr = false">
                     <v-icon color="red">mdi-close</v-icon>
                 </v-btn>
             </v-card-actions>
+            <div class="container">
+                <p>{{ qr_size }}</p>
+            </div>
+            <v-card-actions>
+                <div class="row">
+                    <v-btn @click="qr_size =200"> Qr size 200</v-btn>
+                    <v-btn @click="qr_size =300">Qr size 300</v-btn>
+                    <v-btn @click="qr_size =400">Qr size 400</v-btn>
+                    <v-btn @click="toggleQrSize">Qr size 500</v-btn>
+                </div>
+            </v-card-actions>
 
-            <div class="d-flex">
-                <v-spacer></v-spacer>
+            <div class="d-flex" ref="pdfContent">
+                <v-spacer />
                 <div v-show="show_qr">
                     <div class="bar--code black--text">
                         <div class="container">
                             <h4>Scan here to send a Tip</h4>
-                            <qr-code :to="`/tipp/${account_id}`" style="padding: 10px" id="qrCode12" :text="qr_url" :size="400"></qr-code>
+                            <transition name="scale">
+                                <qr-code :key="qr_size" :text="qr_url" :size="qr_size" />
+                            </transition>
                             <p style="margin: 10px; color: red"></p>
                         </div>
                     </div>
                 </div>
-                <v-spacer></v-spacer>
-
+                <v-spacer />
             </div>
 
         </v-card>
@@ -360,7 +378,7 @@
                         <v-spacer />
                         <div class="">
                             <v-form>
-                                <v-text-field width="200" clearable outlined v-model="balance" disabled type="number" label="Enter amount">
+                                <v-text-field width="200" clearable outlined v-model="available_balance" disabled type="number" label="Available amount">
                                 </v-text-field>
 
                                 <label for="phoneNumber">Provide you mpesa number</label>
@@ -390,6 +408,8 @@ import CryptoJS from "crypto-js";
 import Vue from "vue";
 import numeral from "numeral";
 import VueQRCodeComponent from "vue-qrcode-component";
+// import html2canvas from "html2canvas";
+// import jspdf from "jspdf";
 // Register the Vue component
 Vue.component("qr-code", VueQRCodeComponent);
 
@@ -401,6 +421,7 @@ export default {
     name: "IndexPage",
     data() {
         return {
+            qr_size: 160,
             phonePrefix: "254",
             code_state: false,
             appVerifier: null,
@@ -456,10 +477,33 @@ export default {
             withdraw_totalBalance: 0,
             walletType: "Tip wallets",
             all_transactions: [],
-            qr_url:"",
+            qr_url: "",
         };
     },
     methods: {
+        toggleQrSize() {
+            this.qr_size = 500;
+        },
+        async exportToPDF() {
+            if (process.server) return;
+
+            const html2canvas = (await import("html2canvas")).default;
+            const jsPDF = (await import("jspdf")).default;
+
+            const element = this.$refs.pdfContent;
+
+            const canvas = await html2canvas(element, {
+                scale: 2
+            });
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF("p", "mm", "a4");
+            const width = pdf.internal.pageSize.getWidth();
+            const height = (canvas.height * width) / canvas.width;
+
+            pdf.addImage(imgData, "PNG", 0, 0, width, height);
+            pdf.save(`${this.qr_url}.pdf`);
+        },
         CheckGoalProgress() {
             if (this.goalPercentage === 100) {
                 this.withdraw_dialog = true;
@@ -598,12 +642,17 @@ export default {
                 return;
             }
 
+            if (this.available_balance == 0) {
+                that.snackbarTextError = "You have no available balance to withdraw";
+                that.snackbarError = true;
+                return;
+            }
             axios
                 .post(`https://tipp-meserver-production-5b51.up.railway.app/api/b2c/withdraw`, {
                     uid: that.UID,
                     user_id: that.user_id,
                     phone: phone,
-                    amount: that.balance
+                    amount: that.available_balance
                 })
                 .then(function (response) {
                     console.log("Show profile", response.data);
@@ -1090,7 +1139,7 @@ export default {
     computed: {
         goalPercentage() {
 
-            const percent = (this.balance / this.goal_amount) * 100
+            const percent = (this.pending_balance / this.goal_amount) * 100
 
             return Math.min(percent.toFixed(1), 100)
         }
