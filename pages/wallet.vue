@@ -283,7 +283,7 @@
                 <v-spacer />
                 <div v-show="show_qr">
                     <div class="bar--code black--text">
-                        <div class="container">
+                        <div class="">
                             <h4>Scan here to send a Tip</h4>
                             <transition name="scale">
                                 <qr-code :key="qr_size" :text="qr_url" :size="qr_size" />
@@ -1145,7 +1145,6 @@ export default {
         }
     },
     mounted() {
-        this.user_id = 0;
         this.checkUser();
         this.FetchProfile();
         this.FetchWallet();

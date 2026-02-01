@@ -101,29 +101,29 @@
                                     <v-spacer></v-spacer>
 
                                     <div class="row">
-<button type="button" class="button row" v-for="a in [50,100,200,500,1000,2000,3000,4000,5000]" @click="amount_input=a">
+                                        <button type="button" class="button row" v-for="a in [50,100,200,500,1000,2000,3000,4000,5000]" @click="amount_input=a">
 
-                                        <span class="fold"></span>
+                                            <span class="fold"></span>
 
-                                        <div class="points_wrapper">
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                            <i class="point"></i>
-                                        </div>
+                                            <div class="points_wrapper">
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                                <i class="point"></i>
+                                            </div>
 
-                                        <span class="inner"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
-                                                <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"></polyline>
-                                            </svg> KES {{ a }}</span>
-                                    </button>
+                                            <span class="inner"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
+                                                    <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"></polyline>
+                                                </svg> KES {{ a }}</span>
+                                        </button>
                                     </div>
-                                    
+
                                     <v-spacer></v-spacer>
                                     <!-- <button style="margin: 2px; background-color: aliceblue; color: #000;padding: 10px; font-size: 1.2rem;border-radius: 9px;" v-for="a in [50,100,200,500]" @click="amount_input=a">
                                         KES {{ a }}
@@ -138,19 +138,17 @@
                                     <v-card-text>
 
                                         <label for="voteCount">Enter amount to tip <b style="color: #C6FF00;">{{user_name}}</b></label>
-                                        <v-text-field diable v-model="amount_input" filled placeholder="Enter amount" type="number" dense></v-text-field>
+                                        <v-text-field style="color: white; font-size: 1.5rem;" diable v-model="amount_input" filled placeholder="Enter amount" type="number" dense></v-text-field>
 
                                         <label for="phoneNumber">Provide you mpesa number</label>
-                                        <v-text-field v-model="mpesa_no" :prefix="phonePrefix" filled placeholder="(75..545 format)" dense></v-text-field>
+                                        <v-text-field large style="color: white; font-size: 1.5rem;" v-model="mpesa_no" :prefix="phonePrefix" filled placeholder="(75..545 format)" dense></v-text-field>
                                         <span></span>
                                         <br>
                                         <div class="d-flex">
                                             <p style="font-size: 1.1rem;">Tip amount. <b>{{ numeral(amount_input).format("0,0") }} ksh</b>
                                             </p>
                                         </div>
-                                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black;">
-                                            <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+mpesa_no }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount_input).format("0,0") }}</b> ksh</p>
-                                        </div>
+
                                         <v-progress-linear v-show="progress_bar" indeterminate color="black"></v-progress-linear>
                                         <!-- Message -->
                                         <v-alert v-if="message" class="mt-4" type="success" dense outlined>
@@ -160,7 +158,7 @@
 
                                     <div class="container">
 
-                                        <div class="d-flex">
+                                        <div class="d-flex" @click="stkPush">
                                             <v-spacer />
 
                                             <div class="text-center">
@@ -170,6 +168,10 @@
                                                 </v-btn>
                                             </div>
                                             <v-spacer />
+                                        </div>
+
+                                        <div class="d-flex" style="padding: 0.8rem;border-radius: 1rem;background-color: antiquewhite;color: black; margin-top: 20px;">
+                                            <p style="font-size: 0.9rem;"> An STK push will prompted on the <b>{{ phonePrefix+mpesa_no }}</b> check for an mpesa prompting you to pay <b>{{ numeral(amount_input).format("0,0") }}</b> ksh</p>
                                         </div>
 
                                     </div>
