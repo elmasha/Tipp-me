@@ -138,10 +138,10 @@
                                     <v-card-text>
 
                                         <label for="voteCount">Enter amount to tip <b style="color: #C6FF00;">{{user_name}}</b></label>
-                                        <v-text-field style="color: white; font-size: 1.5rem;" diable v-model="amount_input" filled placeholder="Enter amount" type="number" dense></v-text-field>
+                                        <v-text-field outlined rounded style="color: white; font-size: 1.5rem;" diable v-model="amount_input" filled placeholder="Enter amount" type="number" dense></v-text-field>
 
                                         <label for="phoneNumber">Provide you mpesa number</label>
-                                        <v-text-field large style="color: white; font-size: 1.5rem;" v-model="mpesa_no" :prefix="phonePrefix" filled placeholder="(75..545 format)" dense></v-text-field>
+                                        <v-text-field outlined rounded large style="color: white; font-size: 1.5rem;" v-model="mpesa_no" :prefix="phonePrefix" filled placeholder="(75..545 format)" dense></v-text-field>
                                         <span></span>
                                         <br>
                                         <div class="d-flex">

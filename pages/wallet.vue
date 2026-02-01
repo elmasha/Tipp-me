@@ -1,17 +1,21 @@
 <template>
 <div>
     <v-card class="pa-3 mb-3" color="black" dark>
-        <v-row class="container">
-            <v-col cols="12" sm="1" md="1"></v-col>
-            <v-col cols="12" sm="10" md="10">
+        <v-row class="">
+            <v-col cols="12" sm="12" md="12">
                 <v-row class="">
                     <v-col cols="12" sm="12" md="12">
                         <div class="" style="color: white;">
                             <div class="d-flex">
                                 <h4>Welcome back, <br> {{ user_name }}</h4>
                                 <v-spacer></v-spacer>
-                                <v-btn icon @click="show_qr = !show_qr">
+                                <v-spacer />
+
+                                <v-btn large icon @click="show_qr = !show_qr">
                                     <v-icon>{{ show_qr ? "mdi-qrcode-remove" : "mdi-qrcode-scan" }}</v-icon>
+                                </v-btn>
+                                <v-btn @click="RefreshPage()" icon>
+                                    <v-icon>mdi-refresh</v-icon>
                                 </v-btn>
                             </div>
                         </div>
@@ -247,7 +251,6 @@
                 </v-row>
 
             </v-col>
-            <v-col cols="12" sm="1" md="1"></v-col>
         </v-row>
     </v-card>
 
