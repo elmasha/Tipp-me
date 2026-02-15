@@ -410,7 +410,7 @@ export default {
             that.snackbarText_s = "Checking payment status...";
             that.message = null;
             axios
-                .post("https://tipp-meserver-production-5b51.up.railway.app/api/payments/stk-push/query", {
+                .post("https://tipp-meserver-production-5316.up.railway.app/api/payments/stk-push/query", {
                     checkoutRequestId: that.CheckoutRequestID,
                 })
                 .then(function (response) {
@@ -458,7 +458,7 @@ export default {
             }
 
             axios
-                .post(`https://tipp-meserver-production-5b51.up.railway.app/api/payments/stk-push`, {
+                .post(`https://tipp-meserver-production-5316.up.railway.app/api/payments/stk-push`, {
                     uid: that.UID,
                     profile_id: that.user_id,
                     phone: phone,
@@ -487,7 +487,7 @@ export default {
         async FetchProfile() {
             let that = this;
             axios
-                .get(`https://tipp-meserver-production-5b51.up.railway.app/api/profiles/uid/${that.UID}`, {
+                .get(`https://tipp-meserver-production-5316.up.railway.app/api/profiles/uid/${that.UID}`, {
 
                 })
                 .then(function (response) {
@@ -515,7 +515,7 @@ export default {
         async FetchWallet() {
             let that = this;
             axios
-                .get(`https://tipp-meserver-production-5b51.up.railway.app/api/wallets/get-wallet/${that.UID}`, {
+                .get(`https://tipp-meserver-production-5316.up.railway.app/api/wallets/get-wallet/${that.UID}`, {
 
                 })
                 .then(function (response) {
