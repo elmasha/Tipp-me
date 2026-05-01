@@ -1,75 +1,38 @@
 <template>
 <v-app dark style="background-color: black;" v-resize="onResize">
 
-    <v-app-bar elevation="0" color="black" dark :clipped-left="clipped" fixed app>
-        <v-app-bar-nav-icon @click="drawer = !drawer" />
-
-        <v-spacer />
-
-        <div v-show="!showBurger">
-            <v-list class="d-flex" style="background-color: black;">
-
-                <v-list-item>
-                    <nuxt-link id="link" to="/" style="margin: 4px;">Home</nuxt-link>
-                </v-list-item>
-                <v-list-item>
-                    <nuxt-link id="link" to="/" style="margin: 4px;">About</nuxt-link>
-                </v-list-item>
-                <v-list-item>
-                    <nuxt-link id="link" to="/wallet" style="margin: 4px;">Wallet</nuxt-link>
-                </v-list-item>
-                <v-list-item>
-                    <nuxt-link id="link" to="/terms" style="margin: 4px;">T & C</nuxt-link>
-                </v-list-item>
-
-            </v-list>
-        </div>
-
-        <v-spacer />
-
-        <v-btn icon v-show="false">
-            <v-icon>mdi-chart-line-stacked</v-icon>
-        </v-btn>
-        <v-btn icon v-show="!auth_state">
-            <v-icon>mdi-bell-badge</v-icon>
-        </v-btn>
-
-        <v-btn v-if="!auth_state" icon @click="logout()">
-            <v-icon>mdi-logout</v-icon>
-        </v-btn>
-    </v-app-bar>
-    <v-navigation-drawer  fixed dark color="black" v-model="drawer" :mini-variant="miniVariant" :clipped="clipped"  app>
-        <v-list>
-            <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
-                <v-list-item-action>
-                    <v-icon color="green">{{ item.icon }}</v-icon>
-                     
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title >{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-
-            </v-list-item>
-        </v-list>
-    </v-navigation-drawer>
+   
+    
     <v-main>
-        <v-container>
+        
             <Nuxt />
-        </v-container>
+       
     </v-main>
 
-    <v-footer style="background-color: black;" dark :absolute="!fixed" app>
-        <div>
-            <div class="d-flex">
-                <v-spacer />
-                <div class="d-flex">
-                    <h5 style="color: #C6FF00;">Tip-mee</h5>
-                    <span>&copy; {{ new Date().getFullYear() }}</span>
-                </div>
-            </div>
-        </div>
+    <v-footer class="tipme-footer" dark app>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        T
+      </div>
 
-    </v-footer>
+      <div>
+        <h4>TipMe</h4>
+        <p>Digital tipping made simple</p>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <NuxtLink style="color:#fff" to="/">Home</NuxtLink>
+      <NuxtLink style="color:#fff" to="/wallet">Wallet</NuxtLink>
+      <NuxtLink style="color:#fff" to="/terms">Terms</NuxtLink>
+    </div>
+
+    <div class="footer-copy">
+      &copy; {{ new Date().getFullYear() }} TipMe. All rights reserved.
+    </div>
+  </div>
+</v-footer>
 </v-app>
 </template>
 
@@ -169,6 +132,111 @@ export default {
 </script>
 
 <style>
+.tipme-footer {
+  background: rgba(5, 5, 5, 0.96) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  padding: 22px 18px !important;
+}
+
+.footer-inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  color: black;
+  font-size: 18px;
+  font-weight: 950;
+
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  box-shadow: 0 0 26px rgba(182, 255, 0, 0.26);
+}
+
+.footer-brand h4 {
+  margin: 0;
+  color: white;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.footer-brand p {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color:#fff;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  padding: 9px 13px;
+  border-radius: 999px;
+
+  color: rgba(255, 255, 255, 0.68);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  transition: 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: black;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+}
+
+.footer-copy {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .tipme-footer {
+    padding: 20px 14px !important;
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .footer-links {
+    width: 100%;
+  }
+
+  .footer-copy {
+    width: 100%;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+}
+
+
 * {
     font-family: "Quicksand";
 }

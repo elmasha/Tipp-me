@@ -1,794 +1,1211 @@
 <template>
-<v-app dark style="background-color: black;color: white;">
-    <v-row>
+  <v-app class="tipme-page">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="brand" @click="scrollToSection('home')">
+        <div class="brand-icon">T</div>
 
-        <v-col cols="12" id="home" class="pa-0">
-            <Home :show-burger="false" @send-data="scrollToSection" />
-        </v-col>
+        <div class="brand-text">
+          <h3>TipMe</h3>
+          <span>Digital tipping made simple</span>
+        </div>
+      </div>
 
-        <v-col cols="12" id="about" class="pa-0">
-            <About />
-        </v-col>
-    </v-row>
+      <!-- DESKTOP NAV -->
+      <div class="nav-actions desktop-nav">
+        <button @click="scrollToSection('home')">Home</button>
+        <button @click="scrollToSection('about')">About</button>
+        <button @click="scrollToSection('who')">Who Uses It</button>
+        <button @click="scrollToSection('steps')">How It Works</button>
+        <button @click="goTo('/wallet')">Wallet</button>
+        <button @click="goTo('/terms')">Terms</button>
 
-</v-app>
+        <button class="nav-cta" @click="scrollToSection('steps')">
+          Get Started
+        </button>
+      </div>
+
+      <!-- MOBILE NAV ACTIONS -->
+      <div class="mobile-nav-actions">
+        <button class="mobile-cta" @click="handleMobileNav('steps')">
+          Start
+        </button>
+
+        <button class="menu-btn" @click="mobileMenu = !mobileMenu">
+          <v-icon color="white">
+            {{ mobileMenu ? "mdi-close" : "mdi-menu" }}
+          </v-icon>
+        </button>
+      </div>
+
+      <!-- MOBILE DROPDOWN -->
+      <transition name="mobile-menu">
+        <div v-if="mobileMenu" class="mobile-menu">
+          <button @click="handleMobileNav('home')">
+            <v-icon size="18" color="#b6ff00">mdi-home-outline</v-icon>
+            Home
+          </button>
+
+          <button @click="handleMobileNav('about')">
+            <v-icon size="18" color="#b6ff00">mdi-information-outline</v-icon>
+            About
+          </button>
+
+          <button @click="handleMobileNav('who')">
+            <v-icon size="18" color="#b6ff00">mdi-account-group-outline</v-icon>
+            Who Uses It
+          </button>
+
+          <button @click="handleMobileNav('steps')">
+            <v-icon size="18" color="#b6ff00">mdi-map-marker-path</v-icon>
+            How It Works
+          </button>
+
+          <button @click="handleMobileRoute('/wallet')">
+            <v-icon size="18" color="#b6ff00">mdi-wallet-outline</v-icon>
+            Wallet
+          </button>
+
+          <button @click="handleMobileRoute('/terms')">
+            <v-icon size="18" color="#b6ff00">mdi-file-document-outline</v-icon>
+            Terms
+          </button>
+        </div>
+      </transition>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero-section">
+      <div class="hero-bg"></div>
+
+      <div class="hero-content">
+        <div class="hero-left">
+          <div class="pill">
+            <span></span>
+            No app needed. Just scan and tip.
+          </div>
+
+          <h1>
+            Tipping made
+            <br />
+            simple, fast
+            <br />
+            and digital.
+          </h1>
+
+          <p>
+            TipMe helps customers tip workers, creators, service teams and
+            businesses instantly using QR codes and mobile payments.
+          </p>
+
+          <div class="hero-buttons">
+            <button class="primary-btn" @click="scrollToSection('steps')">
+              Get Started
+              <v-icon size="18" color="black">mdi-arrow-right</v-icon>
+            </button>
+
+            <button class="secondary-btn" @click="scrollToSection('about')">
+              Learn More
+            </button>
+          </div>
+
+          <div class="hero-stats">
+            <div>
+              <h4>QR</h4>
+              <span>Scan to tip</span>
+            </div>
+
+            <div>
+              <h4>M-Pesa</h4>
+              <span>Mobile payments</span>
+            </div>
+
+            <div>
+              <h4>Instant</h4>
+              <span>Fast experience</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="phone-card">
+            <div class="phone-top">
+              <div>
+                <span>TipMe Wallet</span>
+                <h3>KES 12,450</h3>
+              </div>
+
+              <div class="status-dot"></div>
+            </div>
+
+            <div class="qr-box">
+              <div class="qr-inner">
+                <div class="qr-grid"></div>
+              </div>
+            </div>
+
+            <div class="tip-row">
+              <div>
+                <small>Recent tip</small>
+                <strong>KES 250</strong>
+              </div>
+              <span>Completed</span>
+            </div>
+
+            <div class="tip-row">
+              <div>
+                <small>Payment method</small>
+                <strong>M-Pesa</strong>
+              </div>
+              <span>Active</span>
+            </div>
+          </div>
+
+          <div class="floating-card card-one">
+            <strong>KES 500</strong>
+            <span>New tip received</span>
+          </div>
+
+          <div class="floating-card card-two">
+            <strong>QR Active</strong>
+            <span>Ready to receive tips</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-section">
+      <div class="section-container">
+        <div class="section-heading">
+          <div class="section-pill">About TipMe</div>
+
+          <h2>
+            A modern way to receive tips without forcing users to download an app.
+          </h2>
+
+          <p>
+            TipMe gives every creator, worker, waiter, rider, receptionist,
+            performer or business a simple QR payment identity. Customers scan,
+            enter an amount, pay, and the tip is recorded instantly.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card large-card">
+            <div class="card-icon">01</div>
+            <h3>No app required</h3>
+            <p>
+              Customers do not need to install anything. They simply scan a QR
+              code and complete the tip using mobile money.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="card-icon">02</div>
+            <h3>Built for mobile money</h3>
+            <p>
+              Designed around M-Pesa and local payment behavior, making it easy
+              for people to tip in seconds.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="card-icon">03</div>
+            <h3>Track every tip</h3>
+            <p>
+              Users can see their wallet activity, balances, transactions and
+              received tips from one place.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO USES IT -->
+    <section id="who" class="who-section">
+      <div class="section-container">
+        <div class="section-heading compact">
+          <div class="section-pill">Who is TipMe for?</div>
+
+          <h2>Built for people and businesses that receive appreciation.</h2>
+        </div>
+
+        <div class="who-grid">
+          <div class="who-card">
+            <h3>For Creators</h3>
+            <ul>
+              <li>Musicians and performers</li>
+              <li>Online creators</li>
+              <li>Artists and entertainers</li>
+              <li>Community personalities</li>
+            </ul>
+          </div>
+
+          <div class="who-card featured">
+            <h3>For Service Workers</h3>
+            <ul>
+              <li>Waiters and waitresses</li>
+              <li>Salon and barber staff</li>
+              <li>Riders and delivery teams</li>
+              <li>Hotel and hospitality workers</li>
+            </ul>
+          </div>
+
+          <div class="who-card">
+            <h3>For Businesses</h3>
+            <ul>
+              <li>Restaurants and lounges</li>
+              <li>Hotels and guest houses</li>
+              <li>Events and activations</li>
+              <li>Customer-facing teams</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section id="steps" class="steps-section">
+      <div class="section-container">
+        <div class="section-heading compact">
+          <div class="section-pill">How it works</div>
+
+          <h2>Simple enough for anyone to use.</h2>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <span>1</span>
+            <h3>Create profile</h3>
+            <p>
+              A user or business creates a TipMe profile and receives a unique QR code.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <span>2</span>
+            <h3>Share QR</h3>
+            <p>
+              The QR code can be printed, placed on tables, shared online or
+              displayed on a phone.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <span>3</span>
+            <h3>Customer tips</h3>
+            <p>
+              The customer scans, enters an amount and pays using mobile money.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <span>4</span>
+            <h3>Track wallet</h3>
+            <p>
+              The receiver can monitor tips, balances and transactions from their wallet.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </v-app>
 </template>
 
 <script>
-import {
-    uuid
-} from "vue-uuid";
-import moment from "moment";
-import dayjs from "@nuxtjs/dayjs";
-
-import axios from "axios";
-import firebase from "firebase/compat/app";
-import CryptoJS from "crypto-js";
-import Vue from "vue";
-import numeral from "numeral";
-import About from "@/components/About.vue";
-import Home from "@/components/Home.vue";
-import VueQRCodeComponent from "vue-qrcode-component";
-// Register the Vue component
-Vue.component("qr-code", VueQRCodeComponent);
-
-const keyValue = "fd85b4945YF'i"; // your key value (eg: key)
-const ivKey = "smslt";
-
 export default {
-    name: "IndexPage",
-    components: {
-        About,
-        Home,
+  name: "IndexPage",
+
+  data() {
+    return {
+      mobileMenu: false,
+    };
+  },
+
+  methods: {
+    scrollToSection(id) {
+      const target = document.getElementById(id);
+
+      if (!target) return;
+
+      const navbarOffset = 90;
+      const targetPosition =
+        target.getBoundingClientRect().top + window.pageYOffset - navbarOffset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     },
-    data() {
-        return {
-            phonePrefix: "254",
-            code_state: false,
-            appVerifier: null,
-            code_no: null,
-            show66: false,
-            phone_no_auth: null,
-            numeral,
-            scrollInvoked: 0,
-            UID: this.$fire.auth.currentUser ?
-                this.$fire.auth.currentUser.uid : null,
-            security_key: null,
-            withdraw_dialog: false,
-            pin_status: "",
-            pin_status2: "",
-            withdraw_pin_input: "",
-            withdraw_phone: "",
-            pin_input: "",
-            amount_input: "",
-            depo_dialog: false,
-            uid: null,
-            show_qr: false,
-            show_qr1: false,
-            home: require("@/assets/money.png"),
-            password: "",
-            secretKey: null,
-            secret_iv: "smslt",
-            encryptionMethod: "AES-256-CBC",
-            encryptedText: "",
-            user_name: "",
-            user_phone: "",
-            account_id: "",
-            pin: null,
-            amount_input: "",
-            withdraw_amount_input: "",
-            user_input: "",
-            count_account: 0,
-            send_accountNo: "",
-            status: false,
-            timerEnabled: false,
-            show6: false,
-            timerCount: 2,
-            search_status: "",
-            account_id: "",
-            balance: 0,
-            available_balance: 0,
-            locked_balance: 0,
-            pending_balance: 0,
-            goal_amount: 0,
-            goal_raised: 0,
-            user_id: "",
-            encryptedText: "",
-            totalBalance: 0,
-            withdraw_totalBalance: 0,
-            walletType: "Tip wallets",
-            all_transactions: [],
-        };
+
+    goTo(path) {
+      this.$router.push(path);
     },
-    methods: {
-        scrollToSection(id) {
-            const target = document.getElementById(id)
-            if (target.id != 'home') {
-                this.backToTop = true;
-            } else {
-                this.backToTop = false;
-            }
 
-            if (!target) return
-            const start = window.scrollY
-            const end = target.offsetTop
-            const distance = end - start
-            const duration = 800 // ms
-            let startTime = null
+    handleMobileNav(id) {
+      this.mobileMenu = false;
 
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-            }
-
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime
-                const timeElapsed = currentTime - startTime
-                const progress = Math.min(timeElapsed / duration, 1)
-                window.scrollTo(0, start + distance * easeInOutQuad(progress))
-                if (timeElapsed < duration) requestAnimationFrame(animation)
-            }
-            requestAnimationFrame(animation)
-        },
-        CheckGoalProgress() {
-            if (this.goalPercentage === 100) {
-                this.withdraw_dialog = true;
-            } else {
-                alert(`Not able to withdraw \nYour Goal progess is at ${this.goalPercentage} %`)
-            }
-        },
-        configureRecaptcha() {
-            window.recaptchaVerifier = new this.$fireModule.auth.RecaptchaVerifier(
-                "recaptcha-container", {
-                    size: "visible",
-                    callback: (response) => {
-                        console.log(response);
-                    },
-                }
-            );
-        },
-        // handle otpsend
-        sendOtpForVerification() {
-            if (this.phone_no_auth == "") {
-                this.snackbar2 = true;
-                this.snackbarText2 = "Provide phone number";
-            } else {
-                this.progress_bar = true;
-                this.configureRecaptcha();
-                const phoneNumber = "+254" + this.phone_no_auth; //user phone number
-                this.appVerifier = window.recaptchaVerifier;
-                console.log("init SMS", this.appVerifier, "\n", phoneNumber);
-                firebase.auth().languageCode = "en";
-                firebase
-                    .auth()
-                    .signInWithPhoneNumber(phoneNumber, this.appVerifier)
-                    .then((confirmationResult) => {
-                        // SMS sent. Prompt user to type the code from the message, then sign the
-                        // user in with confirmationResult.confirm(code).
-
-                        window.confirmationResult = confirmationResult;
-                        this.confirmation_Result = confirmationResult;
-                        this.code_state = true;
-                        this.progress_bar = false;
-                        console.log("Result", this.confirmation_Result, "OTP sent");
-                        this.snackbar = true;
-                        this.snackbarText = "OTP was successfully";
-                        // this.$toast.success("Otp sent successfully");
-                    })
-                    .catch((error) => {
-                        // Error; SMS not sent
-                        this.progress_bar = false;
-                        console.log("Error", error);
-                        this.snackbar2 = true;
-                        this.snackbarText2 = error;
-                    });
-            }
-        },
-        ConfirmCode() {
-            console.log("Code sent to you.", this.code_no);
-
-            var credential = firebase.auth.PhoneAuthProvider.credential(
-                this.confirmation_Result.verificationId,
-                this.code_no
-            );
-            if ((this.code_no = "")) {
-                this.snackbar2 = true;
-                this.snackbarText2 = "Provide Code sent to you";
-                console.log("Provide Code sent to you");
-            } else {
-                console.log("Verify Code", this.code_no);
-                this.progress_bar = true;
-                firebase
-                    .auth()
-                    .signInWithCredential(credential)
-                    .then((user) => {
-                        // SMS sent. Prompt user to type the code from the message, then sign the
-                        // user in with confirmationResult.confirm(code).
-                        //this.$toast.success("Otp sent successfully");
-                        // this.storeUserDetails();
-                    })
-                    .catch((error) => {
-                        this.progress_bar = false;
-                        // Error; SMS not sent
-                        console.log("Error", error);
-                        this.snackbar2 = true;
-                        this.snackbarText2 = error;
-                    });
-            }
-        },
-        onSelect({
-            name,
-            iso2,
-            dialCode
-        }) {
-            console.log(name, iso2, dialCode);
-        },
-        RefreshPage() {
-            // window.location.reload();
-            this.checkUser();
-            this.FetchProfile();
-            this.FetchWallet();
-        },
-        onScroll() {
-            this.scrollInvoked++
-        },
-        async stkPush() {
-            let that = this;
-            axios
-                .post(`https://tipp-meserver-production-5316.up.railway.app/api/payments/stk-push`, {
-                    uid: that.UID,
-                    profile_id: that.user_id,
-                    phone: that.phone_no2,
-                    amount: that.amount_input
-                })
-                .then(function (response) {
-                    console.log("Show profile", response.data);
-
-                    if (response.status == 200) {
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
-                    } else if (response.status == 400) {
-                        // that.snackbar2 = true;
-                        // that.snackbarText2 = response.data.message;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
-                });
-
-        },
-        async b2c() {
-            let that = this;
-            let phone = that.phonePrefix + that.withdraw_phone;
-            if (phone.length != 12) {
-                that.snackbarTextError = "Phone number should be 12 digits including country code";
-                that.snackbarError = true;
-                return;
-            }
-
-            axios
-                .post(`https://tipp-meserver-production-5316.up.railway.app/api/b2c/withdraw`, {
-                    uid: that.UID,
-                    user_id: that.user_id,
-                    phone: phone,
-                    amount: that.balance
-                })
-                .then(function (response) {
-                    console.log("Show profile", response.data);
-
-                    if (response.status == 200) {
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
-                    } else if (response.status == 400) {
-                        // that.snackbar2 = true;
-                        // that.snackbarText2 = response.data.message;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
-                });
-
-        },
-        async FetchProfile() {
-            let that = this;
-            axios
-                .get(`https://tipp-meserver-production-5316.up.railway.app/api/profiles/uid/${that.UID}`, {
-
-                })
-                .then(function (response) {
-                    console.log("Show profile", response.data);
-                    that.user_name = response.data.username;
-                    that.user_id = response.data.id;
-                    that.goal_amount = response.data.goal_amount;
-                    that.goal_raised = response.data.goal_raised;
-                    that.FetchTransaction();
-                    if (response.status == 200) {
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
-                    } else if (response.status == 400) {
-                        // that.snackbar2 = true;
-                        // that.snackbarText2 = response.data.message;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
-                });
-
-        },
-        async FetchWallet() {
-            let that = this;
-            axios
-                .get(`https://tipp-meserver-production-5316.up.railway.app/api/wallets/get-wallet/${that.UID}`, {
-
-                })
-                .then(function (response) {
-                    console.log("Show wallet", response.data);
-                    // that.user_name = response.data.username;
-                    that.balance = response.data.total_balance;
-                    that.available_balance = response.data.available_balance;
-                    that.pending_balance = response.data.pending_balance;
-                    that.locked_balance = response.data.locked_balance;
-                    // that.user_id = response.data.id;
-                    if (response.status == 200) {
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
-                    } else if (response.status == 400) {
-                        // that.snackbar2 = true;
-                        // that.snackbarText2 = response.data.message;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
-                });
-
-        },
-        checkColor(val) {
-            if (val == "CREDIT") {
-                return "green2";
-            } else if (val == "DEBIT") {
-                return "red";
-            } else if (val == "Tips") {
-                return "blue";
-            }
-        },
-        checkType(val) {
-            if (val == "CREDIT") {
-                return "arrow-up";
-            } else if (val == "DEBIT") {
-                return "arrow-down";
-            } else if (val == "Tips") {
-                return "hand-coin";
-            }
-        },
-        FetchTransaction() {
-            let that = this;
-            axios
-                .get(`https://tipp-meserver-production-5316.up.railway.app/api/wallets/get-ledger/${that.user_id}`, {
-
-                })
-                .then(function (response) {
-                    console.log("transactions", response.data);
-                    if (response.status == 200) {
-                        that.all_transactions = response.data;
-                        // that.snackbar = true;
-                        // that.snackbarText = response.data;
-                    } else if (response.status == 400) {
-                        // that.snackbar2 = true;
-                        // that.snackbarText2 = response.data.message;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    that.snackbarText2 = error.message;
-                    that.snackbar2 = true;
-                });
-
-        },
-        FetchTransactionSearch(val) {
-            let start = new Date("2020-01-01");
-            const db = this.$fire.firestore;
-
-            this.all_transactions.splice(this.all_transactions);
-            db.collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("All_transactions")
-                .where("transaction_type", "==", val)
-                .get()
-                .then((queryResult6) => {
-                    queryResult6.forEach((doc) => {
-                        const data = {
-                            id: doc.id,
-                            transaction_type: doc.data().transaction_type,
-                            user_name: doc.data().user_name,
-                            amount: doc.data().amount,
-                            payment_method: doc.data().payment_method,
-                            transaction_id: doc.data().transaction_id,
-                            previous_balance: doc.data().previous_balance,
-                            current_balance: doc.data().current_balance,
-                            account_id: doc.data().account_id,
-                            transaction_status: doc.data().transaction_status,
-                            date: doc.data().print_date,
-                        };
-
-                        this.all_transactions.push(data);
-                        console.log("Orders", this.all_transactions);
-                    });
-                });
-        },
-        verifyPin(val) {
-            if (val === this.decrypteData(this.pin)) {
-                this.Deposit(this.amount_input);
-                console.log("PIn match");
-                this.pin_status = "";
-            } else {
-                console.log("PIn not match");
-                this.pin_status = "Invalid pin. \nProvide a valid pin number";
-            }
-        },
-        verifyPin2(val) {
-            if (val === this.decrypteData(this.pin)) {
-                this.Withdraw(this.withdraw_amount_input);
-                console.log("PIn match");
-                this.pin_status2 = "";
-            } else {
-                console.log("PIn not match");
-                this.pin_status2 = "Invalid pin. \nProvide a valid pin number";
-            }
-        },
-        FetchUser() {
-            const db = this.$fire.firestore;
-            db.collection("Tipp_user")
-                .where("user_uid", "==", this.$fire.auth.currentUser.uid)
-                .get()
-                .then((queryResult) => {
-                    queryResult.forEach((doc) => {
-                        this.security_key = doc.data().security_key;
-                        this.user_name = doc.data().user_name;
-                        this.phone = doc.data().phone;
-                        this.account_id = doc.data().Account_id;
-                        this.pin = doc.data().pin;
-                    });
-                });
-        },
-
-        encrypteData(data) {
-            if (this.$fire.auth.currentUser.uid == null) {} else {
-                if (data != null) {
-                    const key = CryptoJS.PBKDF2(this.$fire.auth.currentUser.uid, "salt", {
-                        keySize: 256 / 32,
-                        iterations: 1000,
-                    });
-                    const iv = CryptoJS.enc.Utf8.parse(ivKey); // Convert string to WordArray
-                    const encrypted = CryptoJS.AES.encrypt(data, key, {
-                        iv: iv,
-                        mode: CryptoJS.mode.CBC,
-                    });
-
-                    this.encryptedText = encrypted.ciphertext.toString(CryptoJS.enc.Hex);
-                    return encrypted.ciphertext.toString(CryptoJS.enc.Hex);
-                }
-            }
-        },
-        decrypteData(data) {
-            if (this.$fire.auth.currentUser.uid == null) {} else {
-                if (data) {
-                    const key = CryptoJS.PBKDF2(this.$fire.auth.currentUser.uid, "salt", {
-                        keySize: 256 / 32,
-                        iterations: 1000,
-                    });
-                    const iv = CryptoJS.enc.Utf8.parse(ivKey);
-                    const decrypted = CryptoJS.AES.decrypt({
-                            ciphertext: CryptoJS.enc.Hex.parse(data),
-                        },
-                        key, {
-                            iv: iv,
-                            mode: CryptoJS.mode.CBC,
-                        }
-                    );
-                    return decrypted.toString(CryptoJS.enc.Utf8);
-                }
-            }
-        },
-        Check(val) {
-            return val;
-        },
-        checkUser() {
-            if (this.$fire.auth.currentUser != null) {
-                this.secretKey = this.$fire.auth.currentUser.uid;
-                this.uid = this.$fire.auth.currentUser.uid;
-                this.FetchUser();
-                this.FetchWallet();
-                this.FetchTransaction();
-            } else {
-                this.auth_state = false;
-            }
-        },
-        Deposit(val) {
-            const db = this.$fire.firestore;
-
-            let ID = uuid.v1();
-
-            const docRef2 = db
-                .collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("Tipp_wallet")
-                .doc(this.$fire.auth.currentUser.uid);
-            const docRefTransaction = db
-                .collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("Tipp_wallet")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("Tipp_wallet_transaction")
-                .doc();
-            const docRefAllTransaction = db
-                .collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("All_transactions")
-                .doc();
-
-            const transactionDetails = {
-                user_name: this.user_name,
-                amount: val,
-                payment_method: "Mpesa",
-                transaction_id: ID,
-                previous_balance: this.balance,
-                current_balance: this.totalBalance,
-                account_id: this.account_id,
-                transaction_status: "Deposit Successful",
-                date: new Date(),
-                // Add more fields as needed
-            };
-
-            db.runTransaction(async (transaction) => {
-                    transaction.get(docRef2).then((sfDoc) => {
-                        // Add one person to the city population.
-                        // Note: this could be done without a transaction
-                        //       by updating the population using FieldValue.increment()
-                        var totalBalance = sfDoc.data().balance;
-                        // transaction.update(sfDocRef, {
-                        //     balance: this.encrypteData(totalBalance)
-                        // });
-                    });
-
-                    const start_time = this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss");
-                    this.totalBalance = Number(val) + Number(this.balance);
-                    transaction.update(docRef2, {
-                        balance: this.totalBalance,
-                    });
-                    transaction.set(docRefTransaction, {
-                        transaction_type: "Deposit",
-                        user_name: this.user_name,
-                        amount: val,
-                        payment_method: "Mpesa",
-                        transaction_id: ID,
-                        previous_balance: this.balance,
-                        current_balance: this.totalBalance,
-                        account_id: this.account_id,
-                        transaction_status: "Withdraw Successful",
-                        date: new Date(),
-                        print_date: this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss"),
-                    });
-                    transaction.set(docRefAllTransaction, {
-                        transaction_type: "Deposit",
-                        user_name: this.user_name,
-                        amount: val,
-                        wallet_type: this.walletType,
-                        payment_method: "Mpesa",
-                        transaction_id: ID,
-                        previous_balance: this.balance,
-                        current_balance: this.totalBalance,
-                        account_id: this.account_id,
-                        transaction_status: "Successful transaction",
-                        date: new Date(),
-                        print_date: this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss"),
-                    });
-                    console.log(this.totalBalance);
-                })
-                .then((docRef) => {
-                    console.log("Pin set Successfully ");
-                    this.snackbar = true;
-                    this.depo_dialog = false;
-                    this.snackbarText = "Pin set Successfully ";
-                    this.FetchWallet();
-                    this.FetchTransaction();
-                    this.amount_input = "";
-                    this.pin_input = "";
-                })
-                .catch((error) => {
-                    this.snackbar2 = true;
-                    this.snackbarText2 = error;
-                    this.progress_bar = false;
-                    console.error("Error adding listing: ", error);
-                });
-        },
-        Withdraw(val) {
-            const db = this.$fire.firestore;
-
-            let ID = uuid.v1();
-
-            const docRef2 = db
-                .collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("Tipp_wallet")
-                .doc(this.$fire.auth.currentUser.uid);
-            const docRefTransaction = db
-                .collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("Tipp_wallet")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("Tipp_wallet_transaction")
-                .doc();
-            const docRefAllTransaction = db
-                .collection("Tipp_user")
-                .doc(this.$fire.auth.currentUser.uid)
-                .collection("All_transactions")
-                .doc();
-
-            const transactionDetails = {
-                user_name: this.user_name,
-                amount: val,
-                payment_method: "Mpesa",
-                transaction_id: ID,
-                previous_balance: this.balance,
-                current_balance: this.totalBalance,
-                account_id: this.account_id,
-                transaction_status: "Successful transaction",
-                date: new Date(),
-                // Add more fields as needed
-            };
-
-            db.runTransaction(async (transaction) => {
-                    transaction.get(docRef2).then((sfDoc) => {
-                        // Add one person to the city population.
-                        // Note: this could be done without a transaction
-                        //       by updating the population using FieldValue.increment()
-                        var totalBalance = sfDoc.data().balance;
-                        // transaction.update(sfDocRef, {
-                        //     balance: this.encrypteData(totalBalance)
-                        // });
-                    });
-
-                    const start_time = this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss");
-                    this.withdraw_totalBalance = Number(this.balance) - Number(val);
-                    transaction.update(docRef2, {
-                        balance: this.withdraw_totalBalance,
-                    });
-                    transaction.set(docRefTransaction, {
-                        transaction_type: "Withdraw",
-                        user_name: this.user_name,
-                        amount: val,
-                        payment_method: "Tipp me wallet",
-                        transaction_id: ID,
-                        previous_balance: this.balance,
-                        current_balance: this.withdraw_totalBalance,
-                        account_id: this.account_id,
-                        transaction_status: "Successful transaction",
-                        date: new Date(),
-                        print_date: this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss"),
-                    });
-                    transaction.set(docRefAllTransaction, {
-                        transaction_type: "Withdraw",
-                        user_name: this.user_name,
-                        amount: val,
-                        wallet_type: this.walletType,
-                        payment_method: "Tipp me wallet",
-                        transaction_id: ID,
-                        previous_balance: this.balance,
-                        current_balance: this.withdraw_totalBalance,
-                        account_id: this.account_id,
-                        transaction_status: "Successful transaction",
-                        date: new Date(),
-                        print_date: this.$dayjs(new Date()).format("YYYY/MM/DD HH:mm:ss"),
-                    });
-                    console.log(this.withdraw_totalBalance);
-                })
-                .then((docRef) => {
-                    console.log("Pin set Successfully ");
-                    this.snackbar = true;
-                    this.withdraw_dialog = false;
-                    this.snackbarText = "Pin set Successfully ";
-                    this.FetchWallet();
-                    this.FetchTransaction();
-                    this.amount_input = "";
-                    this.pin_input = "";
-                })
-                .catch((error) => {
-                    this.snackbar2 = true;
-                    this.snackbarText2 = error;
-                    this.progress_bar = false;
-                    console.error("Error adding listing: ", error);
-                });
-        },
-
-        setPin() {
-            if (this.password_status == false) {
-                this.snackbar2 = true;
-                this.snackbarText2 = "Password does not match";
-            } else {
-                this.progress_bar = true;
-                const db = this.$fire.firestore;
-
-                const docRef = db.collection("Tipp_user").doc(this.$fire.auth.currentUser.uid);
-                const docRef2 = db
-                    .collection("Tipp_user")
-                    .doc(this.$fire.auth.currentUser.uid)
-                    .collection("Tipp_wallet")
-                    .doc(this.$fire.auth.currentUser.uid);
-
-                const newData = {
-                    Account_id: this.encrypteData(
-                        this.$fire.auth.currentUser.uid + this.user_name + this.phone + new Date()
-                    ),
-                    // Add more fields as needed
-                };
-
-                const newData2 = {
-                    balance: this.encrypteData(Number("0")),
-                    previous_balance: this.encrypteData(Number("0")),
-                    // Add more fields as needed
-                };
-
-                db.runTransaction(async (transaction) => {
-                        transaction.update(docRef, newData);
-                        transaction.update(docRef2, newData2);
-                    })
-                    .then((docRef) => {
-                        console.log("Pin set Successfully ");
-                        this.snackbar = true;
-                        this.snackbarText = "Account set set Successfully ";
-                    })
-                    .catch((error) => {
-                        this.snackbar2 = true;
-                        this.snackbarText2 = error;
-                        console.error("Error adding listing: ", error);
-                    });
-            }
-        },
+      this.$nextTick(() => {
+        this.scrollToSection(id);
+      });
     },
-    created() {
-        //this.setPin();
-    },
-    computed: {
-        goalPercentage() {
-            if (!this.goal_amount) return 0
-            const percent =
-                (this.goal_raised / this.goal_amount) * 100
 
-            return Math.min(percent.toFixed(1), 100)
-        }
+    handleMobileRoute(path) {
+      this.mobileMenu = false;
+      this.goTo(path);
     },
-    mounted() {
-        //  this.checkUser();
-        //  this.FetchProfile();
-        // this.FetchWallet();
-    },
+  },
 };
 </script>
 
 <style scoped>
-/* *{
-        color:#202020;
-    } */
-
-.parallax_about {
-    /* Background image */
-    background-image: url('~/assets/hh.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.tipme-page {
+  min-height: 100vh;
+  background: #050505;
+  color: white;
+  font-family: "Inter", "Poppins", Arial, sans-serif;
+  overflow-x: hidden;
 }
 
-.parallax_about2 {
-    /* Background image */
-    background-image: url('~/assets/g.png');
-    background-position: center;
-    background-repeat: no-repeat;
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: 1180px;
+  height: 72px;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 0 18px;
+  border-radius: 24px;
+
+  background: rgba(8, 8, 8, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  color: black;
+  font-weight: 900;
+  font-size: 20px;
+  box-shadow: 0 0 30px rgba(182, 255, 0, 0.35);
+}
+
+.brand h3 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.brand span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* DESKTOP NAV */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.nav-actions button {
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 10px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.nav-actions button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.nav-actions .nav-cta {
+  color: black;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  box-shadow: 0 0 30px rgba(182, 255, 0, 0.25);
+}
+
+/* MOBILE NAV */
+.mobile-nav-actions {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-cta {
+  border: 0;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: black;
+  font-size: 13px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  box-shadow: 0 0 24px rgba(182, 255, 0, 0.25);
+}
+
+.menu-btn {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* MOBILE DROPDOWN */
+.mobile-menu {
+  position: absolute;
+  top: 82px;
+  left: 0;
+  width: 100%;
+  padding: 12px;
+  border-radius: 24px;
+
+  background: rgba(8, 8, 8, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+}
+
+.mobile-menu button {
+  width: 100%;
+  height: 52px;
+  border: 0;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 16px;
+  margin-bottom: 6px;
+
+  color: white;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.mobile-menu button:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.mobile-menu button:last-child {
+  margin-bottom: 0;
+}
+
+/* DROPDOWN ANIMATION */
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition: all 0.22s ease;
+}
+
+.mobile-menu-enter,
+.mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+}
+
+/* HERO */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 130px 24px 80px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(182, 255, 0, 0.22), transparent 28%),
+    radial-gradient(circle at 85% 20%, rgba(0, 255, 153, 0.15), transparent 26%),
+    radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.06), transparent 30%),
+    linear-gradient(135deg, #050505 0%, #090909 45%, #020202 100%);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 60px;
+}
+
+.hero-left {
+  max-width: 650px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 26px;
+
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pill span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b6ff00;
+  box-shadow: 0 0 18px rgba(182, 255, 0, 0.9);
+}
+
+.hero-left h1 {
+  margin: 0;
+  font-size: clamp(48px, 7vw, 94px);
+  line-height: 0.93;
+  letter-spacing: -5px;
+  font-weight: 950;
+}
+
+.hero-left p {
+  max-width: 560px;
+  margin: 28px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.primary-btn,
+.secondary-btn {
+  height: 54px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 24px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: black;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  box-shadow: 0 22px 50px rgba(182, 255, 0, 0.22);
+}
+
+.secondary-btn {
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 42px;
+  flex-wrap: wrap;
+}
+
+.hero-stats div {
+  min-width: 130px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-stats h4 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.hero-stats span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+/* RIGHT MOCKUP */
+.hero-right {
+  position: relative;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-card {
+  position: relative;
+  width: 360px;
+  min-height: 560px;
+  padding: 24px;
+  border-radius: 42px;
+
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
+    #080808;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 50px 120px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.phone-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 42px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(182, 255, 0, 0.65),
+    transparent,
+    rgba(0, 255, 153, 0.5)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+.phone-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.phone-top span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.phone-top h3 {
+  margin: 6px 0 0;
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+.status-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #b6ff00;
+  box-shadow: 0 0 20px rgba(182, 255, 0, 0.9);
+}
+
+.qr-box {
+  margin-top: 38px;
+  padding: 22px;
+  border-radius: 32px;
+  background: #ffffff;
+}
+
+.qr-inner {
+  height: 230px;
+  border-radius: 22px;
+  background: #000000;
+  overflow: hidden;
+  position: relative;
+}
+
+.qr-grid {
+  position: absolute;
+  inset: 18px;
+  background:
+    linear-gradient(90deg, #fff 14px, transparent 14px) 0 0 / 38px 38px,
+    linear-gradient(#fff 14px, transparent 14px) 0 0 / 38px 38px,
+    linear-gradient(90deg, transparent 24px, #fff 24px) 0 0 / 52px 52px;
+  opacity: 0.9;
+}
+
+.tip-row {
+  margin-top: 18px;
+  padding: 17px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.065);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tip-row small {
+  display: block;
+  color: rgba(255, 255, 255, 0.52);
+  margin-bottom: 5px;
+}
+
+.tip-row strong {
+  font-size: 17px;
+}
+
+.tip-row > span {
+  color: #b6ff00;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.floating-card {
+  position: absolute;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(10, 10, 10, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+}
+
+.floating-card strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.floating-card span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.card-one {
+  top: 95px;
+  left: 10px;
+}
+
+.card-two {
+  right: 0;
+  bottom: 115px;
+}
+
+/* SHARED SECTIONS */
+.section-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.section-heading {
+  max-width: 850px;
+  margin-bottom: 50px;
+}
+
+.section-heading.compact {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-pill {
+  display: inline-flex;
+  margin-bottom: 18px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  color: #b6ff00;
+  background: rgba(182, 255, 0, 0.08);
+  border: 1px solid rgba(182, 255, 0, 0.18);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 62px);
+  line-height: 1;
+  letter-spacing: -3px;
+  font-weight: 950;
+}
+
+.section-heading p {
+  max-width: 720px;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* ABOUT */
+.about-section {
+  position: relative;
+  padding: 120px 24px 90px;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(182, 255, 0, 0.11), transparent 28%),
+    linear-gradient(180deg, #050505 0%, #080808 100%);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.95fr 0.95fr;
+  gap: 22px;
+}
+
+.about-card {
+  min-height: 280px;
+  padding: 30px;
+  border-radius: 34px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.35);
+}
+
+.large-card {
+  min-height: 360px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(182, 255, 0, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035));
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 30px;
+  color: black;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  font-weight: 950;
+}
+
+.about-card h3,
+.who-card h3,
+.step-card h3 {
+  margin: 0 0 14px;
+  font-size: 25px;
+  letter-spacing: -1px;
+}
+
+.about-card p,
+.step-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* WHO */
+.who-section {
+  padding: 100px 24px;
+  background: #050505;
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.who-card {
+  padding: 32px;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.who-card.featured {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(182, 255, 0, 0.18), transparent 36%),
+    rgba(255, 255, 255, 0.07);
+  border-color: rgba(182, 255, 0, 0.22);
+}
+
+.who-card ul {
+  padding: 0;
+  margin: 20px 0 0;
+  list-style: none;
+}
+
+.who-card li {
+  padding: 12px 0;
+  color: rgba(255, 255, 255, 0.68);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* STEPS */
+.steps-section {
+  padding: 100px 24px 130px;
+  background:
+    radial-gradient(circle at 50% 100%, rgba(182, 255, 0, 0.12), transparent 32%),
+    #070707;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.step-card {
+  padding: 28px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.step-card span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 26px;
+  border-radius: 14px;
+  color: black;
+  background: linear-gradient(135deg, #b6ff00, #00ff99);
+  font-weight: 950;
+}
+
+/* GLOBAL VUETIFY FIXES */
+::v-deep .v-btn {
+  text-transform: none !important;
+}
+
+/* MEDIUM NAV FIX */
+@media (max-width: 1120px) {
+  .brand span {
+    display: none;
+  }
+
+  .nav-actions {
+    gap: 4px;
+  }
+
+  .nav-actions button {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+}
+
+/* TABLET */
+@media (max-width: 960px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .hero-left {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-left p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons,
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .hero-right {
+    min-height: auto;
+  }
+
+  .about-grid,
+  .who-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .large-card {
+    min-height: 280px;
+  }
+}
+
+/* MOBILE NAV SWITCH */
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-nav-actions {
+    display: flex;
+  }
+
+  .navbar {
+    top: 14px;
+    width: calc(100% - 28px);
+    height: 70px;
+    border-radius: 24px;
+    padding: 0 14px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 720px) {
+  .hero-section {
+    padding: 110px 16px 56px;
+  }
+
+  .hero-left h1 {
+    font-size: 48px;
+    letter-spacing: -2.6px;
+  }
+
+  .hero-left p {
+    font-size: 15px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .phone-card {
+    width: 100%;
+    max-width: 350px;
+    min-height: auto;
+    border-radius: 34px;
+  }
+
+  .qr-inner {
+    height: 190px;
+  }
+
+  .floating-card {
+    display: none;
+  }
+
+  .section-heading h2 {
+    letter-spacing: -1.8px;
+  }
+
+  .about-section,
+  .who-section,
+  .steps-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .navbar {
+    width: calc(100% - 20px);
+    height: 66px;
+    top: 10px;
+    border-radius: 22px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    font-size: 18px;
+  }
+
+  .brand h3 {
+    font-size: 15px;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .mobile-cta {
+    height: 36px;
+    padding: 0 14px;
+    font-size: 12px;
+  }
+
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+  }
+
+  .mobile-menu {
+    top: 76px;
+    border-radius: 22px;
+  }
 }
 </style>
