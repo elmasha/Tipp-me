@@ -9,7 +9,7 @@
        
     </v-main>
 
-    <v-footer class="tipme-footer" dark app>
+    <v-footer class="tipme-footer" dark app absolute>
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="footer-logo">
@@ -137,6 +137,7 @@ export default {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
   padding: 22px 18px !important;
+  
 }
 
 .footer-inner {

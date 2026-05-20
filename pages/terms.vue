@@ -68,7 +68,7 @@
           <v-icon size="20" color="white">mdi-arrow-left</v-icon>
           Back
         </button>
-
+br
         <div class="legal-pill">
           Legal documents
         </div>
